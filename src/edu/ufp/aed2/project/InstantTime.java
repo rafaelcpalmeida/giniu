@@ -1,6 +1,7 @@
 package edu.ufp.aed2.project;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class InstantTime implements Comparable<InstantTime> {
     private DayOfWeek dayOfWeek;
@@ -54,4 +55,6 @@ public class InstantTime implements Comparable<InstantTime> {
         return "\n\t\tDay of the week: " + this.dayOfWeek +
                 "\n\t\tTime: " + this.time;
     }
+
+
 }

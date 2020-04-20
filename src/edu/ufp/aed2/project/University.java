@@ -5,6 +5,11 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.util.ArrayList;
 
+/**
+ * Main class.
+ * Has all information about the university.
+ * All the information is held here.
+ */
 public class University {
     private final String name;
     private SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
@@ -71,6 +76,7 @@ public class University {
         Subject subject = pclass.getSubject();
         addProfessorToSubject(professor,subject);       // Adds Professor to subjProf
         addClassToCourse(professor.getCourse(),pclass);
+        addSubjectToRoom(pclass.getSchedule().getRoom(),subject);
         // Adding professor to profClass
         if (!this.profClass.contains(professor)) {
             // Professor not registered yet , need to create an ArrayList of classes!
@@ -168,8 +174,91 @@ public class University {
     }
 
 
+    /**
+     * Removes a class and its students , rooms , professors from the STs
+     * @param aclass being removed from the university.
+     */
     public void removeClass(Class aclass){
+        // Get all the data from the class
+        ArrayList<Student> students = aclass.getStudents();
+        Room room = aclass.getSchedule().getRoom();
+        Professor professor = aclass.getProfessor();
+        Subject subject = aclass.getSubject();
+        // Check if the class is in our STs and remove it
+        ArrayList<Class> classes = this.profClass.get(professor);
+        if(classes.contains(aclass)){       // Removes all the data from the STs
+            classes.remove(aclass);         // Remove class from profClass
+            if(classes.isEmpty()) profClass.delete(professor);      // if this professor has no more classes than he's removed
+            ArrayList<Professor> professors = subjProf.get(subject);    // removing professor from the subject taught in this class
+            professors.remove(professor);
+            if(professors.isEmpty()) this.subjProf.delete(subject); // if this subject has no more professor than it's removed
+            ArrayList<Class> classes2 = this.courseClass.get(aclass.getCourse());   // removing class from the the course
+            classes2.remove(aclass);
+            if(classes2.isEmpty()) this.courseClass.delete(aclass.getCourse());
+            ArrayList<Subject> subjects = this.roomSubject.get(room);   // removing subject from the rooms ST
+            subjects.remove(subject);
+            if(subjects.isEmpty()) this.roomSubject.delete(room);       // if this room has no more subjects , delete it
+            for (Student student : students){
+                // removing class for students
+                student.removeClass(aclass);
+            }
+            // removing class for professor
+            professor.removeClass(aclass);
+        } else{
+            System.out.println("[WARNING] University.java - removeClass():");
+            System.out.println("[WARNING] Class not found.");
+        }
+    }
 
+    /**
+     * prints subjProf
+     */
+    public void printSubjProf(){
+        for(Subject subject : subjProf.keys()){
+            System.out.println(subject.toString());
+            for(Professor professor : subjProf.get(subject)){
+                System.out.println("\t");
+                System.out.println(professor.toString());
+            }
+        }
+    }
+
+
+    /**
+     * prints profClass
+     */
+    public void printProfClass(){
+        for(Professor professor : profClass.keys()){
+            System.out.println(professor.toString());
+            for(Class aclass : profClass.get(professor)){
+                System.out.println("\t");
+                System.out.println(aclass.toString());
+            }
+        }
+    }
+
+    /**
+     * prints courseClass
+     */
+    public void printCourseClass(){
+        for(String course : courseClass.keys()){
+            System.out.println(course);
+            for(Class aclass : courseClass.get(course)){
+                System.out.println("\t");
+                System.out.println(aclass.toString());
+            }
+        }
+    }
+
+    public void printRoomSubject(){
+        if(roomSubject.isEmpty()) System.out.println("roomSubject() empty");
+        for(Room room : roomSubject.keys()){
+            System.out.println(room.toString());
+            for(Subject subject : roomSubject.get(room)){
+                System.out.println("\t");
+                System.out.println(subject.toString());
+            }
+        }
     }
 
 

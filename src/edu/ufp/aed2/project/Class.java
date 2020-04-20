@@ -2,6 +2,12 @@ package edu.ufp.aed2.project;
 
 import java.util.ArrayList;
 
+/**
+ * Main class for the whole system.
+ * When you add something into the Class you add to the University STs also
+ * So when you remove the class in the University method removeClass() , your deleting the entire class such
+ * as the students referred to it.
+ */
 public class Class {
     private final String course;
     private final String type;
@@ -21,6 +27,7 @@ public class Class {
         this.university = university;
         this.subject = subject;
         this.professor = professor;
+        professor.addClass(this);
         this.university.addProfessor(professor,this);
     }
 
@@ -28,7 +35,7 @@ public class Class {
      * @param student being added to students ArrayList
      * @throws PersonNotFoundException if the person doesn't exist.
      */
-    public void addStudent(Student student) throws Exception{
+    public void addStudent(Student student) throws PersonNotFoundException{
         if(!this.students.contains(student)){
             // doesn't contains this student in students ArrayList
             this.students.add(student);     // adds this students to arraylist
@@ -44,7 +51,7 @@ public class Class {
      * @param student to be removed from the student's list.
      * @throws PersonNotFoundException if the person doesn't exist.
      */
-    public void removeStudent(Student student) throws Exception{
+    public void removeStudent(Student student) throws PersonNotFoundException{
         if(this.students.contains(student)){
             this.students.remove(student);
             student.removeClass(this);
@@ -55,6 +62,10 @@ public class Class {
         }
     }
 
+
+    public ArrayList<Student> getStudents() {
+        return students;
+    }
 
     public String getCourse() {
         return course;

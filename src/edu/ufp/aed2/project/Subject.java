@@ -37,4 +37,12 @@ public class Subject {
     public void setSigle(String sigle) {
         this.sigle = sigle;
     }
+
+
+    @Override
+    public String toString() {
+        return "Subject" +
+                "\nname= '" + name + '\'' +
+                "\nects=" + ects;
+    }
 }

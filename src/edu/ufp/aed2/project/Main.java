@@ -7,6 +7,7 @@ public class Main {
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
+        testUniversity();
     }
 
     private static void testInstantTime(){
@@ -67,5 +68,35 @@ public class Main {
         Student student1 = new Student("22222","Rogerio");
         student1.removeClass(class1);
 
+    }
+
+    private static void testUniversity(){
+        University university = new University("UFP");
+        Student student = new Student("37045","David Capela");
+        Student student2 = new Student("36111","Jose Carlos");
+        Professor professor = new Professor("jsobral","Joao Sobral","inf");
+        Subject subject = new Subject("Base Dados",6,"BD");
+        Schedule schedule = new Schedule(
+                new InstantTime(DayOfWeek.MONDAY,LocalTime.of(15,0)),
+                new InstantTime(DayOfWeek.MONDAY,LocalTime.of(17,0)),
+                new Room(101,"Sede",30,1,15)
+                );
+        Class class1 = new Class("inf","PL","diurno",schedule,university,subject,professor);
+        try{
+            class1.addStudent(student);
+            class1.addStudent(student2);
+        } catch (PersonNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
+        //university.printSubjProf();
+        //university.printProfClass();
+        //university.printCourseClass();
+        //university.printRoomSubject();
+        student.printClassSchedule();
+        System.out.println("removing class");
+        //System.out.println(class1.getStudents().size());
+        university.removeClass(class1);
+        student.printClassSchedule();
     }
 }
