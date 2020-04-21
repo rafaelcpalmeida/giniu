@@ -19,15 +19,11 @@ public class InstantTime implements Comparable<InstantTime> {
     @Override
     public int compareTo(InstantTime instantTime) {
         int index = this.dayOfWeek.compareTo(instantTime.dayOfWeek);
-        if(index > 0){
-            // this dayOfWeek is after instantTime
-            return 1;
-        }
-        else if(index == 0){
+        if(index > 0) return 1;  // this dayOfWeek is after instantTime
+        if(index == 0){
             // instantTime is in the same week day of this dayOfWeek
             if(this.time.isAfter(instantTime.time)) return 1;
-            else if(this.time.isBefore(instantTime.time)) return -1;
-            return 0;
+            return this.time.isBefore(instantTime.time) ?  -1 :  0;
         }
         // this dayOfWeek is before instantTime
         return -1;
@@ -55,6 +51,4 @@ public class InstantTime implements Comparable<InstantTime> {
         return "\n\t\tDay of the week: " + this.dayOfWeek +
                 "\n\t\tTime: " + this.time;
     }
-
-
 }

@@ -38,7 +38,6 @@ public class Subject {
         this.sigle = sigle;
     }
 
-
     @Override
     public String toString() {
         return "Subject" +

@@ -13,7 +13,6 @@ public abstract class Person {
         instanttimeClass = new RedBlackBST<>();
     }
 
-
     /**
      * Add class to instanttimeClass redblack
      * @param pclass this person is attending to.
@@ -23,11 +22,10 @@ public abstract class Person {
         if(this.instanttimeClass.get(instantTime) == null){
             // if the person has no classes in this time, than the class is added to instanttimeClass
             this.instanttimeClass.put(instantTime,pclass);
-        } else {
-            System.out.println("[WARNING] Person.java - addClass():");
-            System.out.println("[WARNING] This person already has a class in this InstantTime.");
-
+            return;
         }
+        System.out.println("[WARNING] Person.java - addClass():");
+        System.out.println("[WARNING] This person already has a class in this InstantTime.");
     }
 
     /**
@@ -38,13 +36,11 @@ public abstract class Person {
         Class c1 = this.instanttimeClass.get(instantTime);
         if(c1 != null){
             this.instanttimeClass.delete(instantTime);
-        }else{
-            System.out.println("[WARNING] Person.java - removeClass():");
-            System.out.println("[WARNING] This person doesn't have this class in that InstantTime.");
-
+            return;
         }
+        System.out.println("[WARNING] Person.java - removeClass():");
+        System.out.println("[WARNING] This person doesn't have this class in that InstantTime.");
     }
-
 
     /**
      * Prints this person's schedule.
@@ -61,7 +57,6 @@ public abstract class Person {
         }
     }
 
-
     public String getId() {
         return id;
     }
@@ -77,7 +72,6 @@ public abstract class Person {
     public void setName(String name) {
         this.name = name;
     }
-
 
     @Override
     public String toString() {

@@ -20,7 +20,6 @@ public class Professor extends Person{
         this.attendanceSchedule.add(s);
     }
 
-
     public String getCourse() {
         return course;
     }
@@ -35,7 +34,5 @@ public class Professor extends Person{
                 "\ncourse='" + course + '\'' +
                 "\nname='" + this.getName() + '\'' +
                 "\nid='" + this.getId() + '\'';
-
-
     }
 }

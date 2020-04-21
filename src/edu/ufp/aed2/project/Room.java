@@ -8,7 +8,7 @@ import java.util.ArrayList;
  */
 public class Room implements Comparable<Room> {
     private final int number;         // room's number
-    private final String building;    // room's building name ex: "Sede" , "Fisio"
+    private final String building;    // room's building name ex: "Sede", "Fisio"
     private final int maxSize;        // room's maximum size
     private final int floor;          // room's floor number
     private final int plugNumber;     // room's number os electric plugs , if none than 0
@@ -21,7 +21,6 @@ public class Room implements Comparable<Room> {
         this.plugNumber = plugNumber;
     }
 
-
     /**
      * Given a domain of time (start and end) of the week , returns a list of schedules,
      * which the room is available.
@@ -33,7 +32,6 @@ public class Room implements Comparable<Room> {
         return null;
     }
 
-
     /**
      * @param schedule passed to check availability.
      * @return room's availability.
@@ -42,7 +40,6 @@ public class Room implements Comparable<Room> {
         return false;
     }
 
-
     /**
      * @param room other room to compare.
      * @return 0 if equal , 1 if greater , -1 if lesser.
@@ -50,8 +47,7 @@ public class Room implements Comparable<Room> {
     @Override
     public int compareTo(Room room) {
         if (this.number > room.number) return 1;
-        else if (this.number == room.number) return 0;
-        return -1;
+        return this.number == room.number ? 0 : -1;
     }
 
     @Override

@@ -67,7 +67,6 @@ public class Main {
         System.out.println("[CASE] Remove a class when a person doesn't have any.");
         Student student1 = new Student("22222","Rogerio");
         student1.removeClass(class1);
-
     }
 
     private static void testUniversity(){

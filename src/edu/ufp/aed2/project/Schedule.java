@@ -35,7 +35,6 @@ public class Schedule implements Comparable<Schedule> {
         this.room = room;
     }
 
-
     @Override
     public String toString() {
         return "\n\tStart: " + start.toString() +
