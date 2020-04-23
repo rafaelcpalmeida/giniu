@@ -2,12 +2,37 @@ package edu.ufp.aed2.project;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import java.io.File;
+import java.io.FileInputStream;
 
 public class Main {
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
-        testUniversity();
+        //testUniversity();
+        testJSONDecode();
+    }
+
+    private static void testJSONDecode() {
+        File file = new File("data/example.json");
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            byte[] data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+
+            String str = new String(data, "UTF-8");
+
+            JsonObject jsonObject = new JsonParser().parse(str).getAsJsonObject();
+
+            String title = jsonObject.getAsJsonObject("glossary").get("title").getAsString();
+            System.out.println(title);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 
     private static void testInstantTime(){
