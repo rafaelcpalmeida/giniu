@@ -28,3 +28,4 @@ hs_err_pid*
 .idea
 *.iml
 out
+!gson-2.8.6.jar
