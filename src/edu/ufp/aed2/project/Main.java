@@ -1,5 +1,11 @@
 package edu.ufp.aed2.project;
 
+
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
@@ -7,7 +13,8 @@ public class Main {
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
-        testUniversity();
+        //testUniversity();
+        
     }
 
     private static void testInstantTime(){
