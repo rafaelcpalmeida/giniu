@@ -1,39 +1,43 @@
 package edu.ufp.aed2.project;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
         //testUniversity();
-        testJSONDecode();
+        //testFileManager();
+        testManager();
     }
 
-    private static void testJSONDecode() {
-        File file = new File("data/example.json");
-        try {
-            FileInputStream fis = new FileInputStream(file);
-            byte[] data = new byte[(int) file.length()];
-            fis.read(data);
-            fis.close();
-
-            String str = new String(data, "UTF-8");
-
-            JsonObject jsonObject = new JsonParser().parse(str).getAsJsonObject();
-
-            String title = jsonObject.getAsJsonObject("glossary").get("title").getAsString();
-            System.out.println(title);
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
+    private static void testManager() {
+        Manager manager = Manager.getInstance();
+        System.out.println("Testing manager");
+        System.out.println("populate sts from file");
+        manager.populateSTsFromFile();
+        University university = manager.getUniversity("UFP");
+        //university.printProfClass();
+        //university.printRoomSubject();
+        //university.printCourseClass();
+        university.printSubjProf();
     }
+
+    private static void testFileManager() {
+        FileManager fileManager = FileManager.getInstance();
+
+    }
+
 
     private static void testInstantTime(){
         System.out.println("[TEST] InstantTime.java");
@@ -70,7 +74,8 @@ public class Main {
                 new InstantTime(DayOfWeek.MONDAY,LocalTime.of(17,0)),
                 r1);
         University university= new University("UFP");
-        Class class1 = new Class("Eng Inf","PL","BGK",schedule,university,s1,null);
+        Professor professor = new Professor("a","joao","eng ing");
+        Class class1 = new Class("Eng Inf","PL","BGK",schedule,university,s1,professor);
         try{
             class1.addStudent(student);
             class1.addStudent(student2);
