@@ -59,5 +59,4 @@ public class Manager {
             System.out.println("[WARNING] Exception made in populateSTsFromFile(): " + e.getMessage());
         }
     }
-
 }

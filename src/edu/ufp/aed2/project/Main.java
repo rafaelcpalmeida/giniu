@@ -1,16 +1,7 @@
 package edu.ufp.aed2.project;
 
-import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-import java.io.File;
-import java.io.FileInputStream;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {

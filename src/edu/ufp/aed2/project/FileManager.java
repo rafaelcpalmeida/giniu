@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 /**
  * Singleton for a File Manager Class
@@ -24,11 +23,11 @@ public class FileManager {
 
     private final File file;
 
-    private FileManager(){
+    private FileManager() {
         this.file = new File("data/bd.json");
     }
 
-    public static FileManager getInstance(){
+    public static FileManager getInstance() {
         if (obj==null) obj = new FileManager();
         return obj;
     }
@@ -49,7 +48,6 @@ public class FileManager {
         return content.toString();
     }
 
-
     /**
      * Returns all the classes of a university from the bd.json and
      * the corresponding ArrayList of Students
@@ -68,24 +66,36 @@ public class FileManager {
             String course = uniClass.get("course").getAsString();   // course
             String type = uniClass.get("type").getAsString();   // type
             String initials = uniClass.get("initials").getAsString();   // initials
-            JsonObject scheduleJsonObject = uniClass.getAsJsonObject("schedule");   // schedule
-            Schedule schedule =  getScheduleFromJson(scheduleJsonObject);
-            JsonObject subjectJsonObject = uniClass.getAsJsonObject("subject");
-            String subjectName = subjectJsonObject.get("name").getAsString();
-            int ects = subjectJsonObject.get("ects").getAsInt();
-            String sigle = subjectJsonObject.get("sigle").getAsString();
-            Subject subject = new Subject(subjectName,ects,sigle);
-            JsonObject professorJsonObject = uniClass.getAsJsonObject("professor"); // professor
-            String profId = professorJsonObject.get("id").getAsString();
-            String profName = professorJsonObject.get("name").getAsString();
-            String profCourse = professorJsonObject.get("course").getAsString();
-            Professor professor = new Professor(profId,profName,profCourse);
-            JsonArray studentsJsonObject = uniClass.getAsJsonArray("students");
-            ArrayList<Student> students = getStudentsFromJson(studentsJsonObject);  //students
-            Class newClass = new Class(course,type,initials,schedule,university,subject,professor);
+            Schedule schedule =  getScheduleFromJson(uniClass.getAsJsonObject("schedule")); //schedule
+            Subject subject = getSubjectFromJson(uniClass.getAsJsonObject("subject"));  //subject
+            Professor professor = getProfessorFromJson(uniClass.getAsJsonObject("professor"));  //professor
+            ArrayList<Student> students = getStudentsFromJson(uniClass.getAsJsonArray("students"));  //students
+            Class newClass = new Class(course,type,initials,schedule,university,subject,professor); // creating class
             classes.put(newClass,students);
         }
         return classes;
+    }
+
+    /**
+     * @param professorJsonObject Professor Json Object
+     * @return Professor from json
+     */
+    private Professor getProfessorFromJson(JsonObject professorJsonObject){
+        String profId = professorJsonObject.get("id").getAsString();
+        String profName = professorJsonObject.get("name").getAsString();
+        String profCourse = professorJsonObject.get("course").getAsString();
+        return new Professor(profId,profName,profCourse);
+    }
+
+    /**
+     * @param subjectJsonObject Subject Json Object
+     * @return Subject from json
+     */
+    private Subject getSubjectFromJson(JsonObject subjectJsonObject){
+        String subjectName = subjectJsonObject.get("name").getAsString();
+        int ects = subjectJsonObject.get("ects").getAsInt();
+        String sigle = subjectJsonObject.get("sigle").getAsString();
+        return new Subject(subjectName,ects,sigle);
     }
 
     /**
@@ -110,33 +120,37 @@ public class FileManager {
      */
     private Schedule getScheduleFromJson(JsonObject schedule){
         // getting the start InstantTime
-        JsonObject startInstanttime = schedule.getAsJsonObject("start");
-        String startDayOfWeekString = startInstanttime.get("dayOfWeek").getAsString();
-        DayOfWeek startDayOfWeek = DayOfWeek.valueOf(startDayOfWeekString);
-        String time = startInstanttime.get("time").getAsString();
-        // parse 15h30 to LocalTime(15,30)
-        LocalTime localTime = LocalTime.of(Integer.parseInt(time.substring(0,2)),Integer.parseInt(time.substring(3,5)));
-        InstantTime start = new InstantTime(startDayOfWeek,localTime);
+        InstantTime start = getInstantTimeFromJson(schedule.getAsJsonObject("start"));
         // getting the end InstantTime
-        JsonObject endInstanttime = schedule.getAsJsonObject("end");
-        String endDayOfWeekString = endInstanttime.get("dayOfWeek").getAsString();
-        DayOfWeek endDayOfWeek = DayOfWeek.valueOf(endDayOfWeekString);
-        String endTime = startInstanttime.get("time").getAsString();
-        // parse 15h30 to LocalTime(15,30)
-        LocalTime endLocalTime = LocalTime.of(Integer.parseInt(time.substring(0,2)),Integer.parseInt(time.substring(3,5)));
-        InstantTime end = new InstantTime(endDayOfWeek,endLocalTime);
+        InstantTime end = getInstantTimeFromJson(schedule.getAsJsonObject("end"));
         // getting the room
-        JsonObject room = schedule.getAsJsonObject("room");
+        Room room = getRoomFromJson(schedule.getAsJsonObject("room"));
+        return new Schedule(start,end,room);
+    }
+
+    /**
+     * @param jsonObject JsonObject of InstantTime
+     * @return InstantTime
+     */
+    private InstantTime getInstantTimeFromJson(JsonObject jsonObject){
+        String dayOfWeekString = jsonObject.get("dayOfWeek").getAsString();
+        DayOfWeek startDayOfWeek = DayOfWeek.valueOf(dayOfWeekString);
+        String time = jsonObject.get("time").getAsString();
+        // parse ex. 15h30 to ex. LocalTime(15,30)
+        LocalTime localTime = LocalTime.of(Integer.parseInt(time.substring(0,2)),Integer.parseInt(time.substring(3,5)));
+        return new InstantTime(startDayOfWeek,localTime);
+    }
+
+    /**
+     * @param room JsonObject of Room
+     * @return Room
+     */
+    private Room getRoomFromJson(JsonObject room){
         String building = room.get("building").getAsString();
         int number = room.get("number").getAsInt();
         int maxSize = room.get("maxSize").getAsInt();
         int floor = room.get("floor").getAsInt();
         int plugNumber = room.get("plugNumber").getAsInt();
-        Room newRoom = new Room(number,building,maxSize,floor,plugNumber);
-        return new Schedule(start,end,newRoom);
+        return new Room(number,building,maxSize,floor,plugNumber);
     }
-
-
-
-
 }
