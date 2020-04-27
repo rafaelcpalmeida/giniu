@@ -17,4 +17,4 @@ run: ### run previously built image
 	@docker run -it --rm \
 	-v "$$(pwd):/app" \
 	--name $(APP_NAME) \
-	openjdk:14-slim-buster bash -c "mkdir -p /giniu-bin && cd /giniu-bin && cp -r /app/src/edu/ . && cp -r /app/lib . && cp -r /app/data . && echo \"\" && echo \"***************************************************\" && echo \"*  Compiling binaries. This may take some time... *\" && echo \"***************************************************\" && echo \"\" && javac -cp .:\$$(find ./* | grep .jar):/giniu-bin \$$(find ./* | grep .java) && echo \"\" && echo \"*********************\" && echo \"*  Running GINIU... *\" && echo \"**********************\" && echo \"\" && java -cp .:\$$(find ./* | grep .jar):/giniu-bin edu/ufp/aed2/project/Main"
+	openjdk:14-slim-buster bash /app/bootstrap.sh
