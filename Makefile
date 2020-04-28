@@ -13,9 +13,8 @@ else
 endif
 
 .PHONY: run
-run: ### run previously builded image
-	@echo "Running GINIU\n\n"
+run: ### run previously built image
 	@docker run -it --rm \
 	-v "$$(pwd):/app" \
 	--name $(APP_NAME) \
-	openjdk:14-slim-buster bash -c "mkdir -p /giniu-bin && cp -r /app/src/edu/ . && javac edu/ufp/aed2/project/Main.java && java edu/ufp/aed2/project/Main"
+	openjdk:14-slim-buster bash /app/bootstrap.sh

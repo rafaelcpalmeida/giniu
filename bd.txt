@@ -1,0 +1,17 @@
+class:{
+course:eng informatica,
+type:PL,
+initials:BGK,
+university:UFP,
+professor:{id:jsobral,name:Joao Sobral,course:enf informatica},
+schedule:{start:{dayOfWeek:MONDAY,time:15-30},end{dayOfWeek:MONDAY,time:15-30}}
+students:{{id:37045,name:capella},{id:33212,name:Salvato},{id:46003,name:Pampilha}}
+},
+class:{
+course:eng informatica,
+type:TP,
+initials:BGK,
+university:UFP,
+professor:{id:ksilva,name:Keran Silva,course:enf informatica},
+students:{{id:37045,name:capella},{id:33212,name:Salvato},{id:22222,name:Joao}}
+},

@@ -7,8 +7,28 @@ public class Main {
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
-        testUniversity();
+        //testUniversity();
+        //testFileManager();
+        testManager();
     }
+
+    private static void testManager() {
+        Manager manager = Manager.getInstance();
+        System.out.println("Testing manager");
+        System.out.println("populate sts from file");
+        manager.populateSTsFromFile();
+        University university = manager.getUniversity("UFP");
+        //university.printProfClass();
+        //university.printRoomSubject();
+        //university.printCourseClass();
+        university.printSubjProf();
+    }
+
+    private static void testFileManager() {
+        FileManager fileManager = FileManager.getInstance();
+
+    }
+
 
     private static void testInstantTime(){
         System.out.println("[TEST] InstantTime.java");
@@ -45,7 +65,8 @@ public class Main {
                 new InstantTime(DayOfWeek.MONDAY,LocalTime.of(17,0)),
                 r1);
         University university= new University("UFP");
-        Class class1 = new Class("Eng Inf","PL","BGK",schedule,university,s1,null);
+        Professor professor = new Professor("a","joao","eng ing");
+        Class class1 = new Class("Eng Inf","PL","BGK",schedule,university,s1,professor);
         try{
             class1.addStudent(student);
             class1.addStudent(student2);

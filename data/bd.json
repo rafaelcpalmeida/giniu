@@ -1,0 +1,94 @@
+{
+  "classes": [
+    {
+      "university" : "UFP",
+      "course": "eng inf",
+      "type": "PL",
+      "initials": "BGK",
+      "schedule": {
+        "start": {
+          "dayOfWeek" : "MONDAY",
+          "time" : "15h30"
+        },
+        "end": {
+          "dayOfWeek" : "MONDAY",
+          "time" : "17h30"
+        },
+        "room": {
+          "building" : "Sede",
+          "number": 101,
+          "maxSize": 30,
+          "floor": 1,
+          "plugNumber": 30
+        }
+      },
+      "subject" : {
+        "name" : "Redes",
+        "ects" : 6,
+        "sigle" : "BGK"
+      },
+      "professor": {
+        "id": "jsobral",
+        "name": "Joao Sobral",
+        "course": "eng inf"
+      },
+      "students": [
+        {
+          "id": "37045",
+          "name": "David Capela"
+        },
+        {
+          "id": "22341",
+          "name": "Joao Sousa"
+        },
+        {
+          "id": "11111",
+          "name": "Joana Monhe"
+        }
+      ]
+    },
+    {
+      "university" : "UFP",
+      "course": "eng inf",
+      "type": "TP",
+      "initials": "BGK",
+      "schedule": {
+        "start": {
+          "dayOfWeek" : "MONDAY",
+          "time" : "10h00"
+        },
+        "end": {
+          "dayOfWeek" : "MONDAY",
+          "time" : "12h30"
+        },
+        "room": {
+          "building" : "Sede",
+          "number": 102,
+          "maxSize": 30,
+          "floor": 1,
+          "plugNumber": 30
+        }
+      },
+      "subject" : {
+        "name" : "Redes",
+        "ects" : 6,
+        "sigle" : "BGK"
+      },
+      "professor": {
+        "id": "ksilva",
+        "name": "Karen Silva",
+        "course": "eng inf"
+      },
+      "students": [
+        {
+          "id": "37045",
+          "name": "David Capela"
+        },
+        {
+          "id": "11111",
+          "name": "Joana Monhe"
+        }
+      ]
+    }
+  ]
+}
