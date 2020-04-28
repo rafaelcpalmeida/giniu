@@ -47,6 +47,7 @@ public class FileManager {
             content.append(System.lineSeparator());
         }
 
+
         return content.toString();
     }
 
