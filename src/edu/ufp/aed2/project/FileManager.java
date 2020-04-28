@@ -41,10 +41,12 @@ public class FileManager {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         StringBuilder content = new StringBuilder();
         String line;
+
         while ((line = bufferedReader.readLine()) != null) {
             content.append(line);
             content.append(System.lineSeparator());
         }
+
         return content.toString();
     }
 
@@ -54,7 +56,7 @@ public class FileManager {
      * @return ArrayList of Class
      * @throws IOException reading the file
      */
-    public SeparateChainingHashST<Class,ArrayList<Student>> getClasses() throws IOException{
+    public SeparateChainingHashST<Class,ArrayList<Student>> getClasses() throws IOException {
         SeparateChainingHashST<Class,ArrayList<Student>> classes = new SeparateChainingHashST<>();
         JsonObject jsonObject = new JsonParser().parse(this.readAll()).getAsJsonObject();
         JsonArray jsonArray = new JsonParser().parse(jsonObject.get("classes").toString()).getAsJsonArray();    // Gets the "classes" array
@@ -80,7 +82,7 @@ public class FileManager {
      * @param professorJsonObject Professor Json Object
      * @return Professor from json
      */
-    private Professor getProfessorFromJson(JsonObject professorJsonObject){
+    private Professor getProfessorFromJson(JsonObject professorJsonObject) {
         String profId = professorJsonObject.get("id").getAsString();
         String profName = professorJsonObject.get("name").getAsString();
         String profCourse = professorJsonObject.get("course").getAsString();
@@ -91,7 +93,7 @@ public class FileManager {
      * @param subjectJsonObject Subject Json Object
      * @return Subject from json
      */
-    private Subject getSubjectFromJson(JsonObject subjectJsonObject){
+    private Subject getSubjectFromJson(JsonObject subjectJsonObject) {
         String subjectName = subjectJsonObject.get("name").getAsString();
         int ects = subjectJsonObject.get("ects").getAsInt();
         String sigle = subjectJsonObject.get("sigle").getAsString();
@@ -118,7 +120,7 @@ public class FileManager {
      * @param schedule JsonObject from the json file
      * @return Schedule
      */
-    private Schedule getScheduleFromJson(JsonObject schedule){
+    private Schedule getScheduleFromJson(JsonObject schedule) {
         // getting the start InstantTime
         InstantTime start = getInstantTimeFromJson(schedule.getAsJsonObject("start"));
         // getting the end InstantTime
@@ -132,7 +134,7 @@ public class FileManager {
      * @param jsonObject JsonObject of InstantTime
      * @return InstantTime
      */
-    private InstantTime getInstantTimeFromJson(JsonObject jsonObject){
+    private InstantTime getInstantTimeFromJson(JsonObject jsonObject) {
         String dayOfWeekString = jsonObject.get("dayOfWeek").getAsString();
         DayOfWeek startDayOfWeek = DayOfWeek.valueOf(dayOfWeekString);
         String time = jsonObject.get("time").getAsString();
@@ -145,7 +147,7 @@ public class FileManager {
      * @param room JsonObject of Room
      * @return Room
      */
-    private Room getRoomFromJson(JsonObject room){
+    private Room getRoomFromJson(JsonObject room) {
         String building = room.get("building").getAsString();
         int number = room.get("number").getAsInt();
         int maxSize = room.get("maxSize").getAsInt();
