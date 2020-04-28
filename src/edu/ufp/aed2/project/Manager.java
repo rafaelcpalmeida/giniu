@@ -13,7 +13,7 @@ public class Manager {
 
     private static Manager manager;
 
-    private Manager(){
+    private Manager() {
         this.universities = new SeparateChainingHashST<>();
     }
 
