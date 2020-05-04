@@ -13,10 +13,10 @@ public class Class {
     private final String type;
     private final String initials;
     private final University university;
-    private Subject subject;
+    private final Subject subject;
     private Schedule schedule;
-    private Professor professor;
-    private ArrayList<Student> students;
+    private final Professor professor;
+    private final ArrayList<Student> students;
 
     public Class(String course, String type, String initials, Schedule schedule, University university, Subject subject, Professor professor) {
         this.course = course;
@@ -28,15 +28,15 @@ public class Class {
         this.subject = subject;
         this.professor = professor;
         professor.addClass(this);
-        this.university.addProfessor(professor,this);
+        this.university.addProfessor(professor, this);
     }
 
     /**
      * @param student being added to students ArrayList
      * @throws PersonNotFoundException if the person doesn't exist.
      */
-    public void addStudent(Student student) throws PersonNotFoundException{
-        if(!this.students.contains(student)){
+    public void addStudent(Student student) throws PersonNotFoundException {
+        if (!this.students.contains(student)) {
             // doesn't contains this student in students ArrayList
             this.students.add(student);     // adds this students to arraylist
             student.addClass(this);     // adds this class to the student's class
@@ -51,8 +51,8 @@ public class Class {
      * @param student to be removed from the student's list.
      * @throws PersonNotFoundException if the person doesn't exist.
      */
-    public void removeStudent(Student student) throws PersonNotFoundException{
-        if(this.students.contains(student)){
+    public void removeStudent(Student student) throws PersonNotFoundException {
+        if (this.students.contains(student)) {
             this.students.remove(student);
             student.removeClass(this);
             return;
@@ -108,8 +108,8 @@ public class Class {
                 "Schedule: " + schedule.toString();
     }
 
-    public void printStudents(){
-        for(Student student : students){
+    public void printStudents() {
+        for (Student student : students) {
             System.out.println(student.toString());
         }
     }

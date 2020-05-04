@@ -24,11 +24,12 @@ public class Room implements Comparable<Room> {
     /**
      * Given a domain of time (start and end) of the week , returns a list of schedules,
      * which the room is available.
+     *
      * @param start starting day of the week.
-     * @param end ending day of the week.
+     * @param end   ending day of the week.
      * @return ArrayList of Schedules which the room is available.
      */
-    public ArrayList<Schedule> availabilityBetween(DayOfWeek start , DayOfWeek end){
+    public ArrayList<Schedule> availabilityBetween(DayOfWeek start, DayOfWeek end) {
         return null;
     }
 
@@ -36,7 +37,7 @@ public class Room implements Comparable<Room> {
      * @param schedule passed to check availability.
      * @return room's availability.
      */
-    public boolean isAvailable(Schedule schedule){
+    public boolean isAvailable(Schedule schedule) {
         return false;
     }
 

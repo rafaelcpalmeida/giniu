@@ -30,11 +30,11 @@ public class Main {
     }
 
 
-    private static void testInstantTime(){
+    private static void testInstantTime() {
         System.out.println("[TEST] InstantTime.java");
         System.out.println("==================================================");
-        InstantTime instantTime1 = new InstantTime(DayOfWeek.MONDAY,LocalTime.now());
-        InstantTime instantTime2 = new InstantTime(DayOfWeek.TUESDAY,LocalTime.now());
+        InstantTime instantTime1 = new InstantTime(DayOfWeek.MONDAY, LocalTime.now());
+        InstantTime instantTime2 = new InstantTime(DayOfWeek.TUESDAY, LocalTime.now());
         System.out.println("[DATA] Same hours , different days.");
         System.out.println("[CASE] instantTime2 > instantTime1");
         System.out.println("[ASSERT] 1");
@@ -42,8 +42,8 @@ public class Main {
         System.out.println("[CASE] instantTime1 < instantTime2");
         System.out.println("[ASSERT] -1");
         System.out.println(instantTime1.compareTo(instantTime2));
-        instantTime1 =  new InstantTime(DayOfWeek.MONDAY,LocalTime.of(15,0));
-        instantTime2 =  new InstantTime(DayOfWeek.MONDAY,LocalTime.of(10,0));
+        instantTime1 = new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0));
+        instantTime2 = new InstantTime(DayOfWeek.MONDAY, LocalTime.of(10, 0));
         System.out.println("[DATA] Different hours , same day.");
         System.out.println("[CASE] instantTime2 < instantTime1");
         System.out.println("[ASSERT] -1");
@@ -53,24 +53,24 @@ public class Main {
         System.out.println(instantTime1.compareTo(instantTime2));
     }
 
-    private static void testPerson(){
+    private static void testPerson() {
         System.out.println("[TEST] Person.java");
         System.out.println("==================================================");
-        Student student = new Student("37045","David Capela");
-        Student student2 = new Student("37145","Joao Silva");
-        Room r1 = new Room(101,"Sede",30,1,30);
-        Subject s1 = new Subject("Base dados",6,"PL");
+        Student student = new Student("37045", "David Capela");
+        Student student2 = new Student("37145", "Joao Silva");
+        Room r1 = new Room(101, "Sede", 30, 1, 30);
+        Subject s1 = new Subject("Base dados", 6, "PL");
         Schedule schedule = new Schedule(
-                new InstantTime(DayOfWeek.MONDAY,LocalTime.of(15,0)),
-                new InstantTime(DayOfWeek.MONDAY,LocalTime.of(17,0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
                 r1);
-        University university= new University("UFP");
-        Professor professor = new Professor("a","joao","eng ing");
-        Class class1 = new Class("Eng Inf","PL","BGK",schedule,university,s1,professor);
-        try{
+        University university = new University("UFP");
+        Professor professor = new Professor("a", "joao", "eng ing");
+        Class class1 = new Class("Eng Inf", "PL", "BGK", schedule, university, s1, professor);
+        try {
             class1.addStudent(student);
             class1.addStudent(student2);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("ex");
         }
         System.out.println("[DATA] Different students , one class.");
@@ -86,26 +86,26 @@ public class Main {
         student.printClassSchedule();
         class1.printStudents();
         System.out.println("[CASE] Remove a class when a person doesn't have any.");
-        Student student1 = new Student("22222","Rogerio");
+        Student student1 = new Student("22222", "Rogerio");
         student1.removeClass(class1);
     }
 
-    private static void testUniversity(){
+    private static void testUniversity() {
         University university = new University("UFP");
-        Student student = new Student("37045","David Capela");
-        Student student2 = new Student("36111","Jose Carlos");
-        Professor professor = new Professor("jsobral","Joao Sobral","inf");
-        Subject subject = new Subject("Base Dados",6,"BD");
+        Student student = new Student("37045", "David Capela");
+        Student student2 = new Student("36111", "Jose Carlos");
+        Professor professor = new Professor("jsobral", "Joao Sobral", "inf");
+        Subject subject = new Subject("Base Dados", 6, "BD");
         Schedule schedule = new Schedule(
-                new InstantTime(DayOfWeek.MONDAY,LocalTime.of(15,0)),
-                new InstantTime(DayOfWeek.MONDAY,LocalTime.of(17,0)),
-                new Room(101,"Sede",30,1,15)
-                );
-        Class class1 = new Class("inf","PL","diurno",schedule,university,subject,professor);
-        try{
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
+                new Room(101, "Sede", 30, 1, 15)
+        );
+        Class class1 = new Class("inf", "PL", "diurno", schedule, university, subject, professor);
+        try {
             class1.addStudent(student);
             class1.addStudent(student2);
-        } catch (PersonNotFoundException e){
+        } catch (PersonNotFoundException e) {
             System.out.println(e.getMessage());
         }
 

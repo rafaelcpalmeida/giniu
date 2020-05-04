@@ -1,12 +1,11 @@
 package edu.ufp.aed2.project;
 
-import edu.princeton.cs.algs4.RedBlackBST;
-
 import java.util.ArrayList;
 
-public class Professor extends Person{
+public class Professor extends Person {
     private String course;
-    private ArrayList<Schedule> attendanceSchedule;
+    private final ArrayList<Schedule> attendanceSchedule;
+
     public Professor(String id, String name, String course) {
         super(id, name);
         this.course = course;
@@ -16,7 +15,7 @@ public class Professor extends Person{
     /**
      * @param s schedule being added to attendanceSchedule.
      */
-    public void addAttendanceSchedule(Schedule s){
+    public void addAttendanceSchedule(Schedule s) {
         this.attendanceSchedule.add(s);
     }
 
