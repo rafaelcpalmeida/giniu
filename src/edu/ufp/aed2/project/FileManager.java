@@ -61,8 +61,8 @@ public class FileManager {
      */
     public SeparateChainingHashST<Class, ArrayList<Student>> getClasses() throws IOException {
         SeparateChainingHashST<Class, ArrayList<Student>> classes = new SeparateChainingHashST<>();
-        JsonObject jsonObject = new JsonParser().parse(this.readAll()).getAsJsonObject();
-        JsonArray jsonArray = new JsonParser().parse(jsonObject.get("classes").toString()).getAsJsonArray();    // Gets the "classes" array
+        JsonObject jsonObject = JsonParser.parseString(this.readAll()).getAsJsonObject();
+        JsonArray jsonArray = JsonParser.parseString(jsonObject.get("classes").toString()).getAsJsonArray();    // Gets the "classes" array
         for (JsonElement element : jsonArray) {
             // Iterating every class
             JsonObject uniClass = element.getAsJsonObject();    // class
