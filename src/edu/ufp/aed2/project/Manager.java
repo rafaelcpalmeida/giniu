@@ -9,9 +9,9 @@ import java.util.ArrayList;
  * Singleton that manages all the universities
  */
 public class Manager {
-    private final SeparateChainingHashST<String, University> universities;
-
     private static Manager manager;
+    private final SeparateChainingHashST<String, University> universities;
+    private SeparateChainingHashST<Class, ArrayList<Student>> classes;
 
     private Manager() {
         this.universities = new SeparateChainingHashST<>();
@@ -44,20 +44,13 @@ public class Manager {
     public void populateSTsFromFile() {
         FileManager fileManager = FileManager.getInstance();    // FileManager singleton that has all the file related stuff methods
         try {
-            SeparateChainingHashST<Class, ArrayList<Student>> classes = fileManager.getClasses();
-            for (Class nclass : classes.keys()) {
-                // iterate each class and adds all the students properly (calling the addStudent method)
-                ArrayList<Student> students = classes.get(nclass);
-                for (Student student : students) {
-                    try {
-                        nclass.addStudent(student);
-                    } catch (PersonNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    }
-                }
-            }
+            this.classes = fileManager.getClasses();
         } catch (IOException e) {
             System.out.println("[WARNING] Exception made in populateSTsFromFile(): " + e.getMessage());
         }
+    }
+
+    public SeparateChainingHashST<Class, ArrayList<Student>> getClasses() {
+        return classes;
     }
 }

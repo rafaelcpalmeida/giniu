@@ -21,6 +21,26 @@ public class Room implements Comparable<Room> {
         this.plugNumber = plugNumber;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public String getBuilding() {
+        return building;
+    }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public int getPlugNumber() {
+        return plugNumber;
+    }
+
     /**
      * Given a domain of time (start and end) of the week , returns a list of schedules,
      * which the room is available.

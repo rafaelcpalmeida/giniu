@@ -26,6 +26,13 @@ public class University {
     }
 
     /**
+     * @return university name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
      * @return rooms being used now.
      */
     private ArrayList<Room> getRoomsUsedNow() {

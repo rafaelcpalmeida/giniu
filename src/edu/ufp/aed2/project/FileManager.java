@@ -4,12 +4,10 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonWriter;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ public class FileManager {
     private final File file;
 
     private FileManager() {
-        this.file = new File("data/bd.json");
+        this.file = new File("/app/data/bd.json");
     }
 
     public static FileManager getInstance() {
@@ -38,7 +36,7 @@ public class FileManager {
      * @return All lines from the file.
      * @throws IOException reading the file.
      */
-    private String readAll() throws IOException {
+    private String readAllFromFile(File file) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
         StringBuilder content = new StringBuilder();
         String line;
@@ -47,7 +45,6 @@ public class FileManager {
             content.append(line);
             content.append(System.lineSeparator());
         }
-
 
         return content.toString();
     }
@@ -61,7 +58,7 @@ public class FileManager {
      */
     public SeparateChainingHashST<Class, ArrayList<Student>> getClasses() throws IOException {
         SeparateChainingHashST<Class, ArrayList<Student>> classes = new SeparateChainingHashST<>();
-        JsonObject jsonObject = JsonParser.parseString(this.readAll()).getAsJsonObject();
+        JsonObject jsonObject = JsonParser.parseString(this.readAllFromFile(this.file)).getAsJsonObject();
         JsonArray jsonArray = JsonParser.parseString(jsonObject.get("classes").toString()).getAsJsonArray();    // Gets the "classes" array
         for (JsonElement element : jsonArray) {
             // Iterating every class
@@ -75,10 +72,104 @@ public class FileManager {
             Subject subject = getSubjectFromJson(uniClass.getAsJsonObject("subject"));  //subject
             Professor professor = getProfessorFromJson(uniClass.getAsJsonObject("professor"));  //professor
             ArrayList<Student> students = getStudentsFromJson(uniClass.getAsJsonArray("students"));  //students
-            Class newClass = new Class(course, type, initials, schedule, university, subject, professor); // creating class
+            Class newClass = new Class(course, type, initials, schedule, university, subject, professor, students); // creating class
             classes.put(newClass, students);
         }
         return classes;
+    }
+
+    public void saveSTsToFile(SeparateChainingHashST<Class, ArrayList<Student>> classes) {
+        try {
+            JsonWriter writer = new JsonWriter(new BufferedWriter(new FileWriter(this.file, false)));
+            writer.setIndent("  ");
+            writer.beginObject();
+            writer.name("classes");
+            writer.beginArray();
+            writeClassesToJSON(writer, classes);
+            writer.endArray();
+            writer.endObject();
+            writer.close();
+            System.out.println("Data write to a file successfully");
+        } catch (IOException e) {
+            System.out.println("[WARNING] Exception made in saveSTsToFile(): " + e.getMessage());
+        }
+    }
+
+    private void writeClassesToJSON(JsonWriter writer, SeparateChainingHashST<Class, ArrayList<Student>> classes) throws IOException {
+        for (Class classAux : classes.keys()) {
+            writer.beginObject();
+            writer.name("course").value(classAux.getCourse());
+            writer.name("type").value(classAux.getType());
+            writer.name("initials").value(classAux.getInitials());
+            writer.name("university").value(classAux.getUniversity().getName());
+            writer.name("subject");
+            writeSubjectToJSON(writer, classAux.getSubject());
+            writer.name("schedule");
+            writeScheduleToJSON(writer, classAux.getSchedule());
+            writer.name("professor");
+            writeProfessorToJSON(writer, classAux.getProfessor());
+            writer.name("students");
+            writeStudentsToJSON(writer, classAux.getStudents());
+            writer.endObject();
+        }
+    }
+
+    private void writeSubjectToJSON(JsonWriter writer, Subject subject) throws IOException {
+        writer.beginObject();
+        writer.name("name").value(subject.getName());
+        writer.name("ects").value(subject.getEcts());
+        writer.name("initials").value(subject.getInitials());
+        writer.endObject();
+    }
+
+    private void writeScheduleToJSON(JsonWriter writer, Schedule schedule) throws IOException {
+        // start schedule object
+        writer.beginObject();
+        writer.name("start");
+        // start start object
+        writer.beginObject();
+        writer.name("dayOfWeek").value(schedule.getStart().getDayOfWeek().toString());
+        writer.name("time").value(schedule.getStart().getTime().toString());
+        // end start object
+        writer.endObject();
+        writer.name("end");
+        // start end object
+        writer.beginObject();
+        writer.name("dayOfWeek").value(schedule.getEnd().getDayOfWeek().toString());
+        writer.name("time").value(schedule.getEnd().getTime().toString());
+        // end end object
+        writer.endObject();
+        writer.name("room");
+        // start room object
+        writer.beginObject();
+        writer.name("building").value(schedule.getRoom().getBuilding());
+        writer.name("number").value(schedule.getRoom().getNumber());
+        writer.name("maxSize").value(schedule.getRoom().getMaxSize());
+        writer.name("floor").value(schedule.getRoom().getFloor());
+        writer.name("plugNumber").value(schedule.getRoom().getPlugNumber());
+        // end room object
+        writer.endObject();
+        // end schedule object
+        writer.endObject();
+    }
+
+    private void writeProfessorToJSON(JsonWriter writer, Professor professor) throws IOException {
+        writer.beginObject();
+        writer.name("id").value(professor.getId());
+        writer.name("name").value(professor.getName());
+        writer.name("course").value(professor.getCourse());
+        writer.endObject();
+    }
+
+    private void writeStudentsToJSON(JsonWriter writer, ArrayList<Student> students) throws IOException {
+        writer.beginArray();
+        for (Student student : students) {
+            writer.beginObject();
+            writer.name("id").value(student.getId());
+            writer.name("name").value(student.getName());
+            writer.endObject();
+        }
+        writer.endArray();
     }
 
     /**
@@ -99,8 +190,8 @@ public class FileManager {
     private Subject getSubjectFromJson(JsonObject subjectJsonObject) {
         String subjectName = subjectJsonObject.get("name").getAsString();
         int ects = subjectJsonObject.get("ects").getAsInt();
-        String sigle = subjectJsonObject.get("sigle").getAsString();
-        return new Subject(subjectName, ects, sigle);
+        String initials = subjectJsonObject.get("initials").getAsString();
+        return new Subject(subjectName, ects, initials);
     }
 
     /**
@@ -112,8 +203,8 @@ public class FileManager {
         for (JsonElement student : studentsJsonObject) {
             // iterate each student
             JsonObject studentObject = student.getAsJsonObject();
-            String id = studentObject.get("id").toString();
-            String name = studentObject.get("name").toString();
+            String id = studentObject.get("id").getAsString();
+            String name = studentObject.get("name").getAsString();
             students.add(new Student(id, name));
         }
         return students;

@@ -2,6 +2,7 @@ package edu.ufp.aed2.project;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,19 +15,39 @@ public class Main {
 
     private static void testManager() {
         Manager manager = Manager.getInstance();
+        FileManager fileManager = FileManager.getInstance();
         System.out.println("Testing manager");
         System.out.println("populate sts from file");
         manager.populateSTsFromFile();
-        University university = manager.getUniversity("UFP");
+        //University university = manager.getUniversity("UFP");
         //university.printProfClass();
         //university.printRoomSubject();
         //university.printCourseClass();
-        university.printSubjProf();
+        //university.printSubjProf();
+        //testPerson();
+        Room r1 = new Room(301, "Sede", 10, 3, 2);
+        University university = manager.getUniversity("UFP");
+        Subject s1 = new Subject("Hacking SI", 6, "PL");
+        Schedule schedule = new Schedule(
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
+                r1);
+        Professor professor = new Professor("sal", "Tio Sal", "InfoSec");
+        Class class1 = new Class("Eng Inf", "PL", "BGK", schedule, university, s1, professor, new ArrayList<>());
+        Student student = new Student("21561", "Tio Sal");
+        try {
+            class1.addStudent(student);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        manager.getClasses().put(class1, class1.getStudents());
+
+        fileManager.saveSTsToFile(manager.getClasses());
     }
 
     private static void testFileManager() {
         FileManager fileManager = FileManager.getInstance();
-
     }
 
 
@@ -58,6 +79,7 @@ public class Main {
         System.out.println("==================================================");
         Student student = new Student("37045", "David Capela");
         Student student2 = new Student("37145", "Joao Silva");
+        Student student3 = new Student("21561", "Tio Sal");
         Room r1 = new Room(101, "Sede", 30, 1, 30);
         Subject s1 = new Subject("Base dados", 6, "PL");
         Schedule schedule = new Schedule(
@@ -66,12 +88,14 @@ public class Main {
                 r1);
         University university = new University("UFP");
         Professor professor = new Professor("a", "joao", "eng ing");
-        Class class1 = new Class("Eng Inf", "PL", "BGK", schedule, university, s1, professor);
+        Class class1 = new Class("Eng Inf", "PL", "BGK", schedule, university, s1, professor, new ArrayList<>());
         try {
             class1.addStudent(student);
             class1.addStudent(student2);
+            class1.addStudent(student3);
         } catch (Exception e) {
             System.out.println("ex");
+            System.out.println(e.getMessage());
         }
         System.out.println("[DATA] Different students , one class.");
         System.out.println("[CASE] Print student's schedule.");
@@ -101,7 +125,7 @@ public class Main {
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
                 new Room(101, "Sede", 30, 1, 15)
         );
-        Class class1 = new Class("inf", "PL", "diurno", schedule, university, subject, professor);
+        Class class1 = new Class("inf", "PL", "diurno", schedule, university, subject, professor, new ArrayList<>());
         try {
             class1.addStudent(student);
             class1.addStudent(student2);
