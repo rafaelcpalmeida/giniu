@@ -5,13 +5,13 @@ import java.util.ArrayList;
 public class Subject {
     private String name;
     private int ects;
-    private String sigle;
+    private String initials;
     private ArrayList<Class> classes;
 
-    public Subject(String name, int ects, String sigle) {
+    public Subject(String name, int ects, String initials) {
         this.name = name;
         this.ects = ects;
-        this.sigle = sigle;
+        this.initials = initials;
     }
 
     public String getName() {
@@ -30,12 +30,12 @@ public class Subject {
         this.ects = ects;
     }
 
-    public String getSigle() {
-        return sigle;
+    public String getInitials() {
+        return initials;
     }
 
-    public void setSigle(String sigle) {
-        this.sigle = sigle;
+    public void setinitials(String initials) {
+        this.initials = initials;
     }
 
     @Override

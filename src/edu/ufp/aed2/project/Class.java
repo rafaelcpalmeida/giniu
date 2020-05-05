@@ -13,12 +13,13 @@ public class Class {
     private final String type;
     private final String initials;
     private final University university;
-    private Subject subject;
+    private final Subject subject;
+    private final Professor professor;
     private Schedule schedule;
-    private Professor professor;
     private ArrayList<Student> students;
 
-    public Class(String course, String type, String initials, Schedule schedule, University university, Subject subject, Professor professor) {
+    public Class(String course, String type, String initials, Schedule schedule, University university,
+                 Subject subject, Professor professor, ArrayList<Student> students) {
         this.course = course;
         this.type = type;
         this.initials = initials;
@@ -28,15 +29,16 @@ public class Class {
         this.subject = subject;
         this.professor = professor;
         professor.addClass(this);
-        this.university.addProfessor(professor,this);
+        this.university.addProfessor(professor, this);
+        this.students = students;
     }
 
     /**
      * @param student being added to students ArrayList
      * @throws PersonNotFoundException if the person doesn't exist.
      */
-    public void addStudent(Student student) throws PersonNotFoundException{
-        if(!this.students.contains(student)){
+    public void addStudent(Student student) throws PersonNotFoundException {
+        if (!this.students.contains(student)) {
             // doesn't contains this student in students ArrayList
             this.students.add(student);     // adds this students to arraylist
             student.addClass(this);     // adds this class to the student's class
@@ -51,8 +53,8 @@ public class Class {
      * @param student to be removed from the student's list.
      * @throws PersonNotFoundException if the person doesn't exist.
      */
-    public void removeStudent(Student student) throws PersonNotFoundException{
-        if(this.students.contains(student)){
+    public void removeStudent(Student student) throws PersonNotFoundException {
+        if (this.students.contains(student)) {
             this.students.remove(student);
             student.removeClass(this);
             return;
@@ -75,7 +77,7 @@ public class Class {
         return type;
     }
 
-    public String getSigle() {
+    public String getInitials() {
         return initials;
     }
 
@@ -102,14 +104,14 @@ public class Class {
     @Override
     public String toString() {
         return "Type: " + type + '\n' +
-                "Sigle: " + initials + '\n' +
+                "initials: " + initials + '\n' +
                 "Subject: " + subject.getName() + '\n' +
                 "Professor: " + professor.getName() + '\n' +
                 "Schedule: " + schedule.toString();
     }
 
-    public void printStudents(){
-        for(Student student : students){
+    public void printStudents() {
+        for (Student student : students) {
             System.out.println(student.toString());
         }
     }

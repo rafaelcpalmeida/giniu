@@ -12,10 +12,10 @@ import java.util.ArrayList;
  */
 public class University {
     private final String name;
-    private SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
-    private SeparateChainingHashST<Professor, ArrayList<Class>> profClass;
-    private SeparateChainingHashST<String, ArrayList<Class>> courseClass;
-    private RedBlackBST<Room, ArrayList<Subject>> roomSubject;
+    private final SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
+    private final SeparateChainingHashST<Professor, ArrayList<Class>> profClass;
+    private final SeparateChainingHashST<String, ArrayList<Class>> courseClass;
+    private final RedBlackBST<Room, ArrayList<Subject>> roomSubject;
 
     public University(String name) {
         this.name = name;
@@ -23,6 +23,13 @@ public class University {
         profClass = new SeparateChainingHashST<>();
         courseClass = new SeparateChainingHashST<>();
         roomSubject = new RedBlackBST<>();
+    }
+
+    /**
+     * @return university name
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -69,6 +76,7 @@ public class University {
      * Adds a professor to profClass and subjProf.
      * Adds a course to courseClass.
      * Adds a room to roomSubject
+     *
      * @param professor of the class.
      * @param pclass    class of the professor.
      */
@@ -120,6 +128,7 @@ public class University {
 
     /**
      * Adds a subject to a room.
+     *
      * @param room    key.
      * @param subject value.
      */
@@ -169,6 +178,7 @@ public class University {
 
     /**
      * Removes a class and its students, rooms, professors from the STs
+     *
      * @param aclass being removed from the university.
      */
     public void removeClass(Class aclass) {
