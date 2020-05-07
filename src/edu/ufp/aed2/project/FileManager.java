@@ -11,12 +11,15 @@ import java.io.*;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Singleton for a File Manager Class
  * All the operation for the file related stuff are done here
  */
 public class FileManager {
+    private static final Logger LOGGER = Logger.getLogger(FileManager.class.getName());
+
     private static FileManager obj;
 
     private final File file;
@@ -89,9 +92,9 @@ public class FileManager {
             writer.endArray();
             writer.endObject();
             writer.close();
-            System.out.println("Data write to a file successfully");
+            LOGGER.info("Data write to a file successfully");
         } catch (IOException e) {
-            System.out.println("[WARNING] Exception made in saveSTsToFile(): " + e.getMessage());
+            LOGGER.info("[WARNING] Exception made in saveSTsToFile(): " + e.getMessage());
         }
     }
 

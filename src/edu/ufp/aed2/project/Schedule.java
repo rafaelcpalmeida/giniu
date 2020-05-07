@@ -37,9 +37,9 @@ public class Schedule implements Comparable<Schedule> {
 
     @Override
     public String toString() {
-        return "\n\tStart: " + start.toString() +
-                "\n\tEnd: " + end.toString() +
-                "\nRoom: " + room.toString();
+        return "\n\t\tStart: " + start.toString() +
+                "\n\t\tEnd: " + end.toString() +
+                "\n\tRoom: " + room.toString();
     }
 
     /**

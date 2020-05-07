@@ -2,7 +2,11 @@ package edu.ufp.aed2.project;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 
+import java.util.logging.Logger;
+
 public abstract class Person {
+    private static final Logger LOGGER = Logger.getLogger(Person.class.getName());
+
     private String id;
     private String name;
     private final RedBlackBST<InstantTime, Class> instanttimeClass;
@@ -25,8 +29,8 @@ public abstract class Person {
             this.instanttimeClass.put(instantTime, pclass);
             return;
         }
-        System.out.println("[WARNING] Person.java - addClass():");
-        System.out.println("[WARNING] This person already has a class in this InstantTime.");
+        LOGGER.info("[WARNING] Person.java - addClass():");
+        LOGGER.info("[WARNING] This person already has a class in this InstantTime.");
     }
 
     /**
@@ -39,8 +43,8 @@ public abstract class Person {
             this.instanttimeClass.delete(instantTime);
             return;
         }
-        System.out.println("[WARNING] Person.java - removeClass():");
-        System.out.println("[WARNING] This person doesn't have this class in that InstantTime.");
+        LOGGER.info("[WARNING] Person.java - removeClass():");
+        LOGGER.info("[WARNING] This person doesn't have this class in that InstantTime.");
     }
 
     /**
@@ -48,13 +52,13 @@ public abstract class Person {
      */
     public void printClassSchedule() {
         if (this.instanttimeClass.isEmpty()) {
-            System.out.println("No schedule yet for this person.");
+            LOGGER.info("No schedule yet for this person.");
             return;
         }
-        System.out.println(this.name + "'s class schedule:");
+        LOGGER.info(this.name + "'s class schedule:");
         for (InstantTime instantTime : this.instanttimeClass.keys()) {
-            System.out.println(this.instanttimeClass.get(instantTime).toString());
-            System.out.println("=================================");
+            LOGGER.info(this.instanttimeClass.get(instantTime).toString());
+            LOGGER.info("=================================");
         }
     }
 

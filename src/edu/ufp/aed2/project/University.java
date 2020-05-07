@@ -11,6 +11,8 @@ import java.util.ArrayList;
  * All the information is held here.
  */
 public class University {
+    private static final Logger LOGGER = Logger.getLogger(University.class.getName());
+
     private final String name;
     private final SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
     private final SeparateChainingHashST<Professor, ArrayList<Class>> profClass;
@@ -99,8 +101,8 @@ public class University {
             classes.add(pclass);
             return;
         }
-        System.out.println("[WARNING] University.java - addProfessor():");
-        System.out.println("[WARNING] Class already added to this professor.");
+        LOGGER.info("[WARNING] University.java - addProfessor():");
+        LOGGER.info("[WARNING] Class already added to this professor.");
     }
 
     /**
@@ -122,8 +124,8 @@ public class University {
             classes.add(aclass);
             return;
         }
-        System.out.println("[WARNING] University.java - addCourseToClass():");
-        System.out.println("[WARNING] Class already added to this course.");
+        LOGGER.info("[WARNING] University.java - addCourseToClass():");
+        LOGGER.info("[WARNING] Class already added to this course.");
     }
 
     /**
@@ -147,8 +149,8 @@ public class University {
             subjects.add(subject);
             return;
         }
-        System.out.println("[WARNING] University.java - addSubjectToRoom():");
-        System.out.println("[WARNING] Subject already added to this room.");
+        LOGGER.info("[WARNING] University.java - addSubjectToRoom():");
+        LOGGER.info("[WARNING] Subject already added to this room.");
 
     }
 
@@ -172,8 +174,8 @@ public class University {
             professors.add(professor);
             return;
         }
-        System.out.println("[WARNING] University.java - addProfessorToSubject():");
-        System.out.println("[WARNING] Professor already added to this subject.");
+        LOGGER.info("[WARNING] University.java - addProfessorToSubject():");
+        LOGGER.info("[WARNING] Professor already added to this subject.");
     }
 
     /**
@@ -211,8 +213,8 @@ public class University {
             professor.removeClass(aclass);
             return;
         }
-        System.out.println("[WARNING] University.java - removeClass():");
-        System.out.println("[WARNING] Class not found.");
+        LOGGER.info("[WARNING] University.java - removeClass():");
+        LOGGER.info("[WARNING] Class not found.");
     }
 
     /**
@@ -220,10 +222,10 @@ public class University {
      */
     public void printSubjProf() {
         for (Subject subject : subjProf.keys()) {
-            System.out.println(subject.toString());
+            LOGGER.info(subject.toString());
             for (Professor professor : subjProf.get(subject)) {
-                System.out.println("\t");
-                System.out.println(professor.toString());
+                LOGGER.info("\t");
+                LOGGER.info(professor.toString());
             }
         }
     }
@@ -233,10 +235,10 @@ public class University {
      */
     public void printProfClass() {
         for (Professor professor : profClass.keys()) {
-            System.out.println(professor.toString());
+            LOGGER.info(professor.toString());
             for (Class aclass : profClass.get(professor)) {
-                System.out.println("\t");
-                System.out.println(aclass.toString());
+                LOGGER.info("\t");
+                LOGGER.info(aclass.toString());
             }
         }
     }

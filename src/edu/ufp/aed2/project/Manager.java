@@ -4,11 +4,14 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Singleton that manages all the universities
  */
 public class Manager {
+    private static final Logger LOGGER = Logger.getLogger(Manager.class.getName());
+
     private static Manager manager;
     private final SeparateChainingHashST<String, University> universities;
     private SeparateChainingHashST<Class, ArrayList<Student>> classes;
@@ -46,7 +49,7 @@ public class Manager {
         try {
             this.classes = fileManager.getClasses();
         } catch (IOException e) {
-            System.out.println("[WARNING] Exception made in populateSTsFromFile(): " + e.getMessage());
+            LOGGER.info("[WARNING] Exception made in populateSTsFromFile(): " + e.getMessage());
         }
     }
 
