@@ -4,6 +4,8 @@ import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  * Main class.
@@ -14,6 +16,7 @@ public class University {
     private static final Logger LOGGER = Logger.getLogger(University.class.getName());
 
     private final String name;
+    private final HashMap<String, Professor> professors;
     private final SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
     private final SeparateChainingHashST<Professor, ArrayList<Class>> profClass;
     private final SeparateChainingHashST<String, ArrayList<Class>> courseClass;
@@ -21,6 +24,7 @@ public class University {
 
     public University(String name) {
         this.name = name;
+        professors = new HashMap<>();
         subjProf = new SeparateChainingHashST<>();
         profClass = new SeparateChainingHashST<>();
         courseClass = new SeparateChainingHashST<>();
@@ -87,6 +91,7 @@ public class University {
         addProfessorToSubject(professor, subject);       // Adds Professor to subjProf
         addClassToCourse(professor.getCourse(), pclass);
         addSubjectToRoom(pclass.getSchedule().getRoom(), subject);
+        professors.putIfAbsent(professor.getId(), professor);
         // Adding professor to profClass
         if (!this.profClass.contains(professor)) {
             // Professor not registered yet, need to create an ArrayList of classes!
@@ -248,24 +253,44 @@ public class University {
      */
     public void printCourseClass() {
         for (String course : courseClass.keys()) {
-            System.out.println(course);
+            LOGGER.info(course);
             for (Class aclass : courseClass.get(course)) {
-                System.out.println("\t");
-                System.out.println(aclass.toString());
+                LOGGER.info("\t");
+                LOGGER.info(aclass.toString());
             }
         }
     }
 
     public void printRoomSubject() {
-        if (roomSubject.isEmpty()) System.out.println("roomSubject() empty");
+        if (roomSubject.isEmpty()) LOGGER.info("roomSubject() empty");
         for (Room room : roomSubject.keys()) {
-            System.out.println(room.toString());
+            LOGGER.info(room.toString());
             for (Subject subject : roomSubject.get(room)) {
-                System.out.println("\t");
-                System.out.println(subject.toString());
+                LOGGER.info("\t");
+                LOGGER.info(subject.toString());
             }
         }
     }
 
+    public Professor getProfessor(String username) {
+        return professors.get(username);
+    }
 
+    public void getProfessorClasses(Professor professor) {
+        if (professor == null) {
+            LOGGER.warning("invalid professor");
+            return;
+        }
+        ArrayList<Class> profClasses = profClass.get(professor);
+
+        if (profClasses != null) {
+            for (Class aclass : profClasses) {
+                LOGGER.info(aclass.getInitials());
+            }
+
+            return;
+        }
+
+        LOGGER.info("No classes found for given professor");
+    }
 }

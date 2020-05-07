@@ -37,21 +37,32 @@ public class Main {
         //Room r1 = new Room(301, "Sede", 10, 3, 2);
         LOGGER.info("Using UFP as university");
         University university = manager.getUniversity("UFP");
-        Subject s1 = new Subject("Hacking SI", 6, "PL");
+        LOGGER.info("Listing classes for sal");
+        Professor professor = university.getProfessor("sal");
+        university.getProfessorClasses(professor);
+        LOGGER.info("");
+        LOGGER.info("Listing classes for inexisting");
+        professor = university.getProfessor("inexisting");
+        university.getProfessorClasses(professor);
+        LOGGER.info("");
+        LOGGER.info("Listing classes for jsobral");
+        professor = university.getProfessor("jsobral");
+        university.getProfessorClasses(professor);
+        LOGGER.info("");
+        /*Subject s1 = new Subject("Hacking SI", 6, "PL");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
                 r1);
-        Professor professor = new Professor("sal", "Tio Sal", "InfoSec");
         Class class1 = new Class("Eng Inf", "PL", "BGK", schedule, university, s1, professor, new ArrayList<>());
-        Student student = new Student("21561", "Tio Sal");
+        Student student = new Student("21561", "Leandro Pires");
         try {
             class1.addStudent(student);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        manager.getClasses().put(class1, class1.getStudents());
+        manager.getClasses().put(class1, class1.getStudents());*/
 
         fileManager.saveSTsToFile(manager.getClasses());
     }
