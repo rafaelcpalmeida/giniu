@@ -72,7 +72,7 @@ public class FileManager {
             String type = uniClass.get("type").getAsString();   // type
             String initials = uniClass.get("initials").getAsString();   // initials
             Schedule schedule = getScheduleFromJson(uniClass.getAsJsonObject("schedule")); //schedule
-            Subject subject = getSubjectFromJson(uniClass.getAsJsonObject("subject"));  //subject
+            Subject subject = getSubjectFromJson(university, uniClass.getAsJsonObject("subject"));  //subject
             Professor professor = getProfessorFromJson(university, uniClass.getAsJsonObject("professor"));  //professor
             ArrayList<Student> students = getStudentsFromJson(uniClass.getAsJsonArray("students"));  //students
             Class newClass = new Class(course, type, initials, schedule, university, subject, professor, students); // creating class
@@ -197,10 +197,18 @@ public class FileManager {
      * @param subjectJsonObject Subject Json Object
      * @return Subject from json
      */
-    private Subject getSubjectFromJson(JsonObject subjectJsonObject) {
+    private Subject getSubjectFromJson(University university, JsonObject subjectJsonObject) {
         String subjectName = subjectJsonObject.get("name").getAsString();
         int ects = subjectJsonObject.get("ects").getAsInt();
         String initials = subjectJsonObject.get("initials").getAsString();
+
+        Subject subject = university.getSubject(subjectName);
+
+        if (subject != null) {
+            return subject;
+        }
+
+
         return new Subject(subjectName, ects, initials);
     }
 

@@ -1,45 +1,41 @@
 {
   "classes": [
     {
-      "course": "eng inf",
-      "type": "TP",
-      "initials": "KAM",
+      "course": "Eng Inf",
+      "type": "PL",
+      "initials": "BGK",
       "university": "UFP",
       "subject": {
-        "name": "Cooking",
-        "ects": 10,
-        "initials": "KAM"
+        "name": "Hacking SI",
+        "ects": 6,
+        "initials": "PL"
       },
       "schedule": {
         "start": {
           "dayOfWeek": "MONDAY",
-          "time": "10:00"
+          "time": "15:00"
         },
         "end": {
           "dayOfWeek": "MONDAY",
-          "time": "12:00"
+          "time": "17:00"
         },
         "room": {
           "building": "Sede",
-          "number": 102,
-          "maxSize": 50,
-          "floor": 1,
-          "plugNumber": 5
+          "number": 301,
+          "maxSize": 10,
+          "floor": 3,
+          "plugNumber": 2
         }
       },
       "professor": {
-        "id": "jsobral",
-        "name": "Joao Santos Sobral",
-        "course": "eng inf"
+        "id": "sal",
+        "name": "Tio Sal",
+        "course": "InfoSec"
       },
       "students": [
         {
-          "id": "37045",
-          "name": "David Capela"
-        },
-        {
-          "id": "11111",
-          "name": "Joana Monhe"
+          "id": "21561",
+          "name": "Leandro Pires"
         }
       ]
     },
@@ -98,11 +94,11 @@
       },
       "schedule": {
         "start": {
-          "dayOfWeek": "MONDAY",
+          "dayOfWeek": "TUESDAY",
           "time": "15:00"
         },
         "end": {
-          "dayOfWeek": "MONDAY",
+          "dayOfWeek": "TUESDAY",
           "time": "17:00"
         },
         "room": {
@@ -114,14 +110,14 @@
         }
       },
       "professor": {
-        "id": "sal",
-        "name": "Tio Sal",
-        "course": "InfoSec"
+        "id": "jsobral",
+        "name": "Joao Santos Sobral",
+        "course": "eng inf"
       },
       "students": [
         {
           "id": "21561",
-          "name": "Leandro Pires"
+          "name": "Dentinho"
         }
       ]
     },
@@ -165,6 +161,49 @@
         {
           "id": "22341",
           "name": "Joao Sousa"
+        },
+        {
+          "id": "11111",
+          "name": "Joana Monhe"
+        }
+      ]
+    },
+    {
+      "course": "eng inf",
+      "type": "TP",
+      "initials": "KAM",
+      "university": "UFP",
+      "subject": {
+        "name": "Cooking",
+        "ects": 10,
+        "initials": "KAM"
+      },
+      "schedule": {
+        "start": {
+          "dayOfWeek": "MONDAY",
+          "time": "10:00"
+        },
+        "end": {
+          "dayOfWeek": "MONDAY",
+          "time": "12:00"
+        },
+        "room": {
+          "building": "Sede",
+          "number": 102,
+          "maxSize": 50,
+          "floor": 1,
+          "plugNumber": 5
+        }
+      },
+      "professor": {
+        "id": "jsobral",
+        "name": "Joao Santos Sobral",
+        "course": "eng inf"
+      },
+      "students": [
+        {
+          "id": "37045",
+          "name": "David Capela"
         },
         {
           "id": "11111",

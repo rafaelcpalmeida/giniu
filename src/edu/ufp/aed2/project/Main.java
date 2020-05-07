@@ -49,6 +49,10 @@ public class Main {
         professor = university.getProfessor("jsobral");
         university.getProfessorClasses(professor);
         LOGGER.info("");
+        LOGGER.info("Listing professors for Hacking SI");
+        Subject subject = university.getSubject("Hacking SI");
+        university.getProfessorSubjects(subject);
+        LOGGER.info("");
         /*Subject s1 = new Subject("Hacking SI", 6, "PL");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),

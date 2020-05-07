@@ -17,6 +17,7 @@ public class University {
 
     private final String name;
     private final HashMap<String, Professor> professors;
+    private final HashMap<String, Subject> subjects;
     private final SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
     private final SeparateChainingHashST<Professor, ArrayList<Class>> profClass;
     private final SeparateChainingHashST<String, ArrayList<Class>> courseClass;
@@ -25,6 +26,7 @@ public class University {
     public University(String name) {
         this.name = name;
         professors = new HashMap<>();
+        subjects = new HashMap<>();
         subjProf = new SeparateChainingHashST<>();
         profClass = new SeparateChainingHashST<>();
         courseClass = new SeparateChainingHashST<>();
@@ -92,6 +94,7 @@ public class University {
         addClassToCourse(professor.getCourse(), pclass);
         addSubjectToRoom(pclass.getSchedule().getRoom(), subject);
         professors.putIfAbsent(professor.getId(), professor);
+        subjects.putIfAbsent(subject.getName(), subject);
         // Adding professor to profClass
         if (!this.profClass.contains(professor)) {
             // Professor not registered yet, need to create an ArrayList of classes!
@@ -276,6 +279,10 @@ public class University {
         return professors.get(username);
     }
 
+    public Subject getSubject(String name) {
+        return subjects.get(name);
+    }
+
     public void getProfessorClasses(Professor professor) {
         if (professor == null) {
             LOGGER.warning("invalid professor");
@@ -286,6 +293,25 @@ public class University {
         if (profClasses != null) {
             for (Class aclass : profClasses) {
                 LOGGER.info(aclass.getInitials());
+            }
+
+            return;
+        }
+
+        LOGGER.info("No classes found for given professor");
+    }
+
+    public void getProfessorSubjects(Subject subject) {
+        if (subject == null) {
+            LOGGER.warning("invalid subject");
+            return;
+        }
+
+        ArrayList<Professor> subjectProfs = subjProf.get(subject);
+
+        if (subjectProfs != null) {
+            for (Professor professor : subjectProfs) {
+                LOGGER.info(professor.getId() + " - " + professor.getName());
             }
 
             return;
