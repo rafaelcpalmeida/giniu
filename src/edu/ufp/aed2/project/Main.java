@@ -61,6 +61,15 @@ public class Main {
         university.getUnusedRoomsBetweenTimes( new InstantTime(DayOfWeek.MONDAY, LocalTime.of(13, 0)),
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(14, 0)));
         LOGGER.info("");
+        LOGGER.info("Listing room 303 occupancy for Monday 13:00 until 14:00");
+        Room room = university.getRoom("303");
+        university.getRoomsOccupancyBetweenTimes(room,  new InstantTime(DayOfWeek.MONDAY, LocalTime.of(13, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(14, 0)));
+        LOGGER.info("");
+        LOGGER.info("Listing room 303 occupancy for Monday 13:00 until 14:00");
+        university.getRoomsOccupancyBetweenTimes(room,  new InstantTime(DayOfWeek.TUESDAY, LocalTime.of(15, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)));
+        LOGGER.info("");
         /*Subject s1 = new Subject("Hacking SI", 6, "PL");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),

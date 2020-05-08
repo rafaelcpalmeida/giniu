@@ -142,7 +142,7 @@ public class University {
     /**
      * Adds a classAux to a room.
      *
-     * @param room    key.
+     * @param room     key.
      * @param classAux value.
      */
     private void addClassToRoom(Room room, Class classAux) {
@@ -340,5 +340,24 @@ public class University {
                 }
             });
         }
+    }
+
+    public void getRoomsOccupancyBetweenTimes(Room room, InstantTime begin, InstantTime end) {
+        if (room == null) {
+            LOGGER.warning("invalid room");
+            return;
+        }
+
+        roomClass.get(room).forEach(classAux -> {
+            if (classAux.getSchedule().getStart().getDayOfWeek().compareTo(classAux.getSchedule().getEnd().getDayOfWeek()) == 0) {
+                if ((classAux.getSchedule().getStart().getTime().isAfter(begin.getTime()) ||
+                        classAux.getSchedule().getStart().getTime().compareTo(begin.getTime()) == 0) &&
+                        classAux.getSchedule().getStart().getTime().isBefore(end.getTime())) {
+                    LOGGER.info(String.valueOf(classAux.getStudents().size()));
+                    return;
+                }
+                LOGGER.info("0");
+            }
+        });
     }
 }
