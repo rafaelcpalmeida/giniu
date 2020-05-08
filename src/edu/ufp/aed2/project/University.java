@@ -18,19 +18,21 @@ public class University {
     private final String name;
     private final HashMap<String, Professor> professors;
     private final HashMap<String, Subject> subjects;
+    private final HashMap<String, Room> rooms;
     private final SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
     private final SeparateChainingHashST<Professor, ArrayList<Class>> profClass;
     private final SeparateChainingHashST<String, ArrayList<Class>> courseClass;
-    private final RedBlackBST<Room, ArrayList<Subject>> roomSubject;
+    private final RedBlackBST<Room, ArrayList<Class>> roomClass;
 
     public University(String name) {
         this.name = name;
         professors = new HashMap<>();
         subjects = new HashMap<>();
+        rooms = new HashMap<>();
         subjProf = new SeparateChainingHashST<>();
         profClass = new SeparateChainingHashST<>();
         courseClass = new SeparateChainingHashST<>();
-        roomSubject = new RedBlackBST<>();
+        roomClass = new RedBlackBST<>();
     }
 
     /**
@@ -92,9 +94,10 @@ public class University {
         Subject subject = pclass.getSubject();
         addProfessorToSubject(professor, subject);       // Adds Professor to subjProf
         addClassToCourse(professor.getCourse(), pclass);
-        addSubjectToRoom(pclass.getSchedule().getRoom(), subject);
+        addClassToRoom(pclass.getSchedule().getRoom(), pclass);
         professors.putIfAbsent(professor.getId(), professor);
         subjects.putIfAbsent(subject.getName(), subject);
+        rooms.putIfAbsent(String.valueOf(pclass.getSchedule().getRoom().getNumber()), pclass.getSchedule().getRoom());
         // Adding professor to profClass
         if (!this.profClass.contains(professor)) {
             // Professor not registered yet, need to create an ArrayList of classes!
@@ -137,28 +140,28 @@ public class University {
     }
 
     /**
-     * Adds a subject to a room.
+     * Adds a classAux to a room.
      *
      * @param room    key.
-     * @param subject value.
+     * @param classAux value.
      */
-    private void addSubjectToRoom(Room room, Subject subject) {
-        // Adding subject to Room
-        if (!this.roomSubject.contains(room)) {
-            // Room not registered yet, need to create an ArrayList of subjects!
-            ArrayList<Subject> subjects = new ArrayList<>();
-            subjects.add(subject);
-            this.roomSubject.put(room, subjects);
+    private void addClassToRoom(Room room, Class classAux) {
+        // Adding classAux to Room
+        if (!this.roomClass.contains(room)) {
+            // Room not registered yet, need to create an ArrayList of classes!
+            ArrayList<Class> classes = new ArrayList<>();
+            classes.add(classAux);
+            this.roomClass.put(room, classes);
             return;
         }
-        // Already contains the room, just add the subject to ArrayList
-        ArrayList<Subject> subjects = this.roomSubject.get(room);
-        if (!subjects.contains(subject)) {
-            subjects.add(subject);
+        // Already contains the room, just add the classAux to ArrayList
+        ArrayList<Class> classes = this.roomClass.get(room);
+        if (!classes.contains(classAux)) {
+            classes.add(classAux);
             return;
         }
-        LOGGER.info("[WARNING] University.java - addSubjectToRoom():");
-        LOGGER.info("[WARNING] Subject already added to this room.");
+        LOGGER.warning("University.java - addClassToRoom():");
+        LOGGER.warning("Class already added to this room.");
 
     }
 
@@ -210,9 +213,9 @@ public class University {
             ArrayList<Class> classes2 = this.courseClass.get(aclass.getCourse());   // removing class from the the course
             classes2.remove(aclass);
             if (classes2.isEmpty()) this.courseClass.delete(aclass.getCourse());
-            ArrayList<Subject> subjects = this.roomSubject.get(room);   // removing subject from the rooms ST
-            subjects.remove(subject);
-            if (subjects.isEmpty()) this.roomSubject.delete(room);       // if this room has no more subjects, delete it
+            ArrayList<Class> classesAux = this.roomClass.get(room);   // removing subject from the rooms ST
+            classesAux.remove(aclass);
+            if (classesAux.isEmpty()) this.roomClass.delete(room);       // if this room has no more classes, delete it
             for (Student student : students) {
                 // removing class for students
                 student.removeClass(aclass);
@@ -264,13 +267,13 @@ public class University {
         }
     }
 
-    public void printRoomSubject() {
-        if (roomSubject.isEmpty()) LOGGER.info("roomSubject() empty");
-        for (Room room : roomSubject.keys()) {
+    public void printRoomClass() {
+        if (roomClass.isEmpty()) LOGGER.info("roomClass() empty");
+        for (Room room : roomClass.keys()) {
             LOGGER.info(room.toString());
-            for (Subject subject : roomSubject.get(room)) {
+            for (Class classAux : roomClass.get(room)) {
                 LOGGER.info("\t");
-                LOGGER.info(subject.toString());
+                LOGGER.info(classAux.toString());
             }
         }
     }
@@ -281,6 +284,10 @@ public class University {
 
     public Subject getSubject(String name) {
         return subjects.get(name);
+    }
+
+    public Room getRoom(String id) {
+        return rooms.get(id);
     }
 
     public void getProfessorClasses(Professor professor) {
@@ -318,5 +325,20 @@ public class University {
         }
 
         LOGGER.info("No classes found for given professor");
+    }
+
+    public void getUnusedRoomsBetweenTimes(InstantTime begin, InstantTime end) {
+        for (Room room : roomClass.keys()) {
+            roomClass.get(room).forEach(classAux -> {
+                if (classAux.getSchedule().getStart().getDayOfWeek().compareTo(classAux.getSchedule().getEnd().getDayOfWeek()) == 0) {
+                    if ((classAux.getSchedule().getStart().getTime().isAfter(begin.getTime()) ||
+                            classAux.getSchedule().getStart().getTime().compareTo(begin.getTime()) == 0) &&
+                            classAux.getSchedule().getStart().getTime().isBefore(end.getTime())) {
+                        return;
+                    }
+                    LOGGER.info(String.valueOf(room.getNumber()));
+                }
+            });
+        }
     }
 }

@@ -71,7 +71,7 @@ public class FileManager {
             String course = uniClass.get("course").getAsString();   // course
             String type = uniClass.get("type").getAsString();   // type
             String initials = uniClass.get("initials").getAsString();   // initials
-            Schedule schedule = getScheduleFromJson(uniClass.getAsJsonObject("schedule")); //schedule
+            Schedule schedule = getScheduleFromJson(university, uniClass.getAsJsonObject("schedule")); //schedule
             Subject subject = getSubjectFromJson(university, uniClass.getAsJsonObject("subject"));  //subject
             Professor professor = getProfessorFromJson(university, uniClass.getAsJsonObject("professor"));  //professor
             ArrayList<Student> students = getStudentsFromJson(uniClass.getAsJsonArray("students"));  //students
@@ -232,13 +232,13 @@ public class FileManager {
      * @param schedule JsonObject from the json file
      * @return Schedule
      */
-    private Schedule getScheduleFromJson(JsonObject schedule) {
+    private Schedule getScheduleFromJson(University university, JsonObject schedule) {
         // getting the start InstantTime
         InstantTime start = getInstantTimeFromJson(schedule.getAsJsonObject("start"));
         // getting the end InstantTime
         InstantTime end = getInstantTimeFromJson(schedule.getAsJsonObject("end"));
         // getting the room
-        Room room = getRoomFromJson(schedule.getAsJsonObject("room"));
+        Room room = getRoomFromJson(university, schedule.getAsJsonObject("room"));
         return new Schedule(start, end, room);
     }
 
@@ -259,12 +259,20 @@ public class FileManager {
      * @param room JsonObject of Room
      * @return Room
      */
-    private Room getRoomFromJson(JsonObject room) {
+    private Room getRoomFromJson(University university, JsonObject room) {
         String building = room.get("building").getAsString();
         int number = room.get("number").getAsInt();
         int maxSize = room.get("maxSize").getAsInt();
         int floor = room.get("floor").getAsInt();
         int plugNumber = room.get("plugNumber").getAsInt();
+
+        Room roomAux = university.getRoom(String.valueOf(number));
+
+        if (roomAux != null) {
+            return roomAux;
+        }
+
+
         return new Room(number, building, maxSize, floor, plugNumber);
     }
 }

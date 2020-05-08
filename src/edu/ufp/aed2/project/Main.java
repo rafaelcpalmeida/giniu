@@ -30,7 +30,7 @@ public class Main {
         manager.populateSTsFromFile();
         //University university = manager.getUniversity("UFP");
         //university.printProfClass();
-        //university.printRoomSubject();
+        //university.printRoomClass();
         //university.printCourseClass();
         //university.printSubjProf();
         //testPerson();
@@ -52,6 +52,14 @@ public class Main {
         LOGGER.info("Listing professors for Hacking SI");
         Subject subject = university.getSubject("Hacking SI");
         university.getProfessorSubjects(subject);
+        LOGGER.info("");
+        LOGGER.info("Listing free rooms for Monday 10:00 until 12:00");
+        university.getUnusedRoomsBetweenTimes( new InstantTime(DayOfWeek.MONDAY, LocalTime.of(10, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(12, 0)));
+        LOGGER.info("");
+        LOGGER.info("Listing free rooms for Monday 13:00 until 14:00");
+        university.getUnusedRoomsBetweenTimes( new InstantTime(DayOfWeek.MONDAY, LocalTime.of(13, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(14, 0)));
         LOGGER.info("");
         /*Subject s1 = new Subject("Hacking SI", 6, "PL");
         Schedule schedule = new Schedule(
@@ -161,7 +169,7 @@ public class Main {
         //university.printSubjProf();
         //university.printProfClass();
         //university.printCourseClass();
-        //university.printRoomSubject();
+        //university.printRoomClass();
         student.printClassSchedule();
         LOGGER.info("removing class");
         //LOGGER.info(class1.getStudents().size());
