@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class Subject {
     private String name;
-    private int ects;
-    private String initials;
+    private final int ects;
+    private final String initials;
     private ArrayList<Class> classes;
 
     public Subject(String name, int ects, String initials) {
@@ -26,16 +26,8 @@ public class Subject {
         return ects;
     }
 
-    public void setEcts(int ects) {
-        this.ects = ects;
-    }
-
     public String getInitials() {
         return initials;
-    }
-
-    public void setinitials(String initials) {
-        this.initials = initials;
     }
 
     @Override

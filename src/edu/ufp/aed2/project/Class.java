@@ -1,6 +1,7 @@
 package edu.ufp.aed2.project;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Main class for the whole system.
@@ -9,6 +10,8 @@ import java.util.ArrayList;
  * as the students referred to it.
  */
 public class Class {
+    private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+
     private final String course;
     private final String type;
     private final String initials;
@@ -44,8 +47,8 @@ public class Class {
             student.addClass(this);     // adds this class to the student's class
             return;
         }
-        System.out.println("[WARNING] Class.java - addStudent():");
-        System.out.println("[WARNING] Student already added to students.");
+        LOGGER.info("[WARNING] Class.java - addStudent():");
+        LOGGER.info("[WARNING] Student already added to students.");
         throw new PersonNotFoundException(student.getName());
     }
 
@@ -59,8 +62,8 @@ public class Class {
             student.removeClass(this);
             return;
         }
-        System.out.println("[WARNING] Class.java - removeStudent():");
-        System.out.println("[WARNING] Student not found in this class.");
+        LOGGER.info("[WARNING] Class.java - removeStudent():");
+        LOGGER.info("[WARNING] Student not found in this class.");
         throw new PersonNotFoundException(student.getName());
     }
 
@@ -103,16 +106,16 @@ public class Class {
 
     @Override
     public String toString() {
-        return "Type: " + type + '\n' +
-                "initials: " + initials + '\n' +
-                "Subject: " + subject.getName() + '\n' +
-                "Professor: " + professor.getName() + '\n' +
-                "Schedule: " + schedule.toString();
+        return "\n\tType: " + type +
+                "\n\tInitials: " + initials +
+                "\n\tSubject: " + subject.getName() +
+                "\n\tProfessor: " + professor.getName() +
+                "\n\tSchedule: " + schedule.toString();
     }
 
     public void printStudents() {
         for (Student student : students) {
-            System.out.println(student.toString());
+            LOGGER.info(student.toString());
         }
     }
 }

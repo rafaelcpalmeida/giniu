@@ -3,8 +3,17 @@ package edu.ufp.aed2.project;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class Main {
+    private static final Logger LOGGER;
+
+    static {
+        System.setProperty("java.util.logging.SimpleFormatter.format",
+                "\033[32m%1$tF %1$tT\033[39m \u001b[33m[%4$-7s]\u001b[0m %5$s %n");
+        LOGGER = Logger.getLogger(Main.class.getName());
+    }
+
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
@@ -16,32 +25,73 @@ public class Main {
     private static void testManager() {
         Manager manager = Manager.getInstance();
         FileManager fileManager = FileManager.getInstance();
-        System.out.println("Testing manager");
-        System.out.println("populate sts from file");
+        LOGGER.info("Testing manager");
+        LOGGER.info("Populate STs from file");
         manager.populateSTsFromFile();
         //University university = manager.getUniversity("UFP");
         //university.printProfClass();
-        //university.printRoomSubject();
+        //university.printRoomClass();
         //university.printCourseClass();
         //university.printSubjProf();
         //testPerson();
-        Room r1 = new Room(301, "Sede", 10, 3, 2);
+        //Room r1 = new Room(301, "Sede", 10, 3, 2);
+        LOGGER.info("Using UFP as university");
         University university = manager.getUniversity("UFP");
-        Subject s1 = new Subject("Hacking SI", 6, "PL");
+        LOGGER.info("Listing classes for sal");
+        Professor professor = university.getProfessor("sal");
+        university.getProfessorClasses(professor);
+        LOGGER.info("");
+        LOGGER.info("Listing classes for inexisting");
+        professor = university.getProfessor("inexisting");
+        university.getProfessorClasses(professor);
+        LOGGER.info("");
+        LOGGER.info("Listing classes for jsobral");
+        professor = university.getProfessor("jsobral");
+        university.getProfessorClasses(professor);
+        LOGGER.info("");
+        LOGGER.info("Listing professors for Hacking SI");
+        Subject subject = university.getSubject("Hacking SI");
+        university.getProfessorSubjects(subject);
+        LOGGER.info("");
+        LOGGER.info("Listing free rooms for Monday 10:00 until 12:00");
+        university.getUnusedRoomsBetweenTimes( new InstantTime(DayOfWeek.MONDAY, LocalTime.of(10, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(12, 0)));
+        LOGGER.info("");
+        LOGGER.info("Listing free rooms for Monday 13:00 until 14:00");
+        university.getUnusedRoomsBetweenTimes( new InstantTime(DayOfWeek.MONDAY, LocalTime.of(13, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(14, 0)));
+        LOGGER.info("");
+        LOGGER.info("Listing room 303 occupancy for Monday 13:00 until 14:00");
+        Room room = university.getRoom("303");
+        university.getRoomsOccupancyBetweenTimes(room,  new InstantTime(DayOfWeek.MONDAY, LocalTime.of(13, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(14, 0)));
+        LOGGER.info("");
+        LOGGER.info("Listing room 303 occupancy for Monday 13:00 until 14:00");
+        university.getRoomsOccupancyBetweenTimes(room,  new InstantTime(DayOfWeek.TUESDAY, LocalTime.of(15, 0)),
+                new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)));
+        LOGGER.info("");
+        LOGGER.info("Showing attendance time availability for jsobral and capela");
+        Student student = university.getStudent("37045");
+        university.getAttendanceTimeAvailability(professor, student);
+        LOGGER.info("");
+        LOGGER.info("Showing attendance time availability for sal and capela");
+        professor = university.getProfessor("sal");
+        university.getAttendanceTimeAvailability(professor, student);
+        LOGGER.info("");
+        /*Subject s1 = new Subject("Hacking SI", 6, "PL");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
                 r1);
-        Professor professor = new Professor("sal", "Tio Sal", "InfoSec");
         Class class1 = new Class("Eng Inf", "PL", "BGK", schedule, university, s1, professor, new ArrayList<>());
-        Student student = new Student("21561", "Tio Sal");
+        Student student = new Student("21561", "Leandro Pires");
         try {
             class1.addStudent(student);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        manager.getClasses().put(class1, class1.getStudents());
+        manager.getClasses().put(class1, class1.getStudents());*/
 
         fileManager.saveSTsToFile(manager.getClasses());
     }
@@ -52,31 +102,31 @@ public class Main {
 
 
     private static void testInstantTime() {
-        System.out.println("[TEST] InstantTime.java");
-        System.out.println("==================================================");
+        LOGGER.info("[TEST] InstantTime.java");
+        LOGGER.info("==================================================");
         InstantTime instantTime1 = new InstantTime(DayOfWeek.MONDAY, LocalTime.now());
         InstantTime instantTime2 = new InstantTime(DayOfWeek.TUESDAY, LocalTime.now());
-        System.out.println("[DATA] Same hours , different days.");
-        System.out.println("[CASE] instantTime2 > instantTime1");
-        System.out.println("[ASSERT] 1");
-        System.out.println(instantTime2.compareTo(instantTime1));
-        System.out.println("[CASE] instantTime1 < instantTime2");
-        System.out.println("[ASSERT] -1");
-        System.out.println(instantTime1.compareTo(instantTime2));
+        LOGGER.info("[DATA] Same hours , different days.");
+        LOGGER.info("[CASE] instantTime2 > instantTime1");
+        LOGGER.info("[ASSERT] 1");
+        LOGGER.info(String.valueOf(instantTime2.compareTo(instantTime1)));
+        LOGGER.info("[CASE] instantTime1 < instantTime2");
+        LOGGER.info("[ASSERT] -1");
+        LOGGER.info(String.valueOf(instantTime1.compareTo(instantTime2)));
         instantTime1 = new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0));
         instantTime2 = new InstantTime(DayOfWeek.MONDAY, LocalTime.of(10, 0));
-        System.out.println("[DATA] Different hours , same day.");
-        System.out.println("[CASE] instantTime2 < instantTime1");
-        System.out.println("[ASSERT] -1");
-        System.out.println(instantTime2.compareTo(instantTime1));
-        System.out.println("[CASE] instantTime1 > instantTime2");
-        System.out.println("[ASSERT] 1");
-        System.out.println(instantTime1.compareTo(instantTime2));
+        LOGGER.info("[DATA] Different hours , same day.");
+        LOGGER.info("[CASE] instantTime2 < instantTime1");
+        LOGGER.info("[ASSERT] -1");
+        LOGGER.info(String.valueOf(instantTime2.compareTo(instantTime1)));
+        LOGGER.info("[CASE] instantTime1 > instantTime2");
+        LOGGER.info("[ASSERT] 1");
+        LOGGER.info(String.valueOf(instantTime1.compareTo(instantTime2)));
     }
 
     private static void testPerson() {
-        System.out.println("[TEST] Person.java");
-        System.out.println("==================================================");
+        LOGGER.info("[TEST] Person.java");
+        LOGGER.info("==================================================");
         Student student = new Student("37045", "David Capela");
         Student student2 = new Student("37145", "Joao Silva");
         Student student3 = new Student("21561", "Tio Sal");
@@ -94,14 +144,14 @@ public class Main {
             class1.addStudent(student2);
             class1.addStudent(student3);
         } catch (Exception e) {
-            System.out.println("ex");
-            System.out.println(e.getMessage());
+            LOGGER.info("ex");
+            LOGGER.info(e.getMessage());
         }
-        System.out.println("[DATA] Different students , one class.");
-        System.out.println("[CASE] Print student's schedule.");
+        LOGGER.info("[DATA] Different students , one class.");
+        LOGGER.info("[CASE] Print student's schedule.");
         student.printClassSchedule();
         student2.printClassSchedule();
-        System.out.println("[CASE] Print student's schedule when removed class.");
+        LOGGER.info("[CASE] Print student's schedule when removed class.");
         try {
             class1.removeStudent(student);
         } catch (Exception e) {
@@ -109,7 +159,7 @@ public class Main {
         }
         student.printClassSchedule();
         class1.printStudents();
-        System.out.println("[CASE] Remove a class when a person doesn't have any.");
+        LOGGER.info("[CASE] Remove a class when a person doesn't have any.");
         Student student1 = new Student("22222", "Rogerio");
         student1.removeClass(class1);
     }
@@ -130,16 +180,16 @@ public class Main {
             class1.addStudent(student);
             class1.addStudent(student2);
         } catch (PersonNotFoundException e) {
-            System.out.println(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
 
         //university.printSubjProf();
         //university.printProfClass();
         //university.printCourseClass();
-        //university.printRoomSubject();
+        //university.printRoomClass();
         student.printClassSchedule();
-        System.out.println("removing class");
-        //System.out.println(class1.getStudents().size());
+        LOGGER.info("removing class");
+        //LOGGER.info(class1.getStudents().size());
         university.removeClass(class1);
         student.printClassSchedule();
     }

@@ -4,7 +4,7 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public class InstantTime implements Comparable<InstantTime> {
-    private DayOfWeek dayOfWeek;
+    private final DayOfWeek dayOfWeek;
     private LocalTime time;
 
     public InstantTime(DayOfWeek dayOfWeek, LocalTime time) {
@@ -37,10 +37,6 @@ public class InstantTime implements Comparable<InstantTime> {
         return time;
     }
 
-    public void setDayOfWeek(DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
     public void setTime(LocalTime time) {
         this.time = time;
     }
@@ -48,7 +44,7 @@ public class InstantTime implements Comparable<InstantTime> {
 
     @Override
     public String toString() {
-        return "\n\t\tDay of the week: " + this.dayOfWeek +
-                "\n\t\tTime: " + this.time;
+        return "\n\t\t\tDay of the week: " + this.dayOfWeek +
+                "\n\t\t\tTime: " + this.time;
     }
 }
