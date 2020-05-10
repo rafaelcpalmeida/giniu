@@ -70,6 +70,14 @@ public class Main {
         university.getRoomsOccupancyBetweenTimes(room,  new InstantTime(DayOfWeek.TUESDAY, LocalTime.of(15, 0)),
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)));
         LOGGER.info("");
+        LOGGER.info("Showing attendance time availability for jsobral and capela");
+        Student student = university.getStudent("37045");
+        university.getAttendanceTimeAvailability(professor, student);
+        LOGGER.info("");
+        LOGGER.info("Showing attendance time availability for sal and capela");
+        professor = university.getProfessor("sal");
+        university.getAttendanceTimeAvailability(professor, student);
+        LOGGER.info("");
         /*Subject s1 = new Subject("Hacking SI", 6, "PL");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),

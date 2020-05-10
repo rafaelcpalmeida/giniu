@@ -74,9 +74,10 @@ public class FileManager {
             Schedule schedule = getScheduleFromJson(university, uniClass.getAsJsonObject("schedule")); //schedule
             Subject subject = getSubjectFromJson(university, uniClass.getAsJsonObject("subject"));  //subject
             Professor professor = getProfessorFromJson(university, uniClass.getAsJsonObject("professor"));  //professor
-            ArrayList<Student> students = getStudentsFromJson(uniClass.getAsJsonArray("students"));  //students
+            ArrayList<Student> students = getStudentsFromJson(university, uniClass.getAsJsonArray("students"));  //students
             Class newClass = new Class(course, type, initials, schedule, university, subject, professor, students); // creating class
             classes.put(newClass, students);
+            university.getStudents().values().forEach(student -> student.addClass(newClass));
         }
         return classes;
     }
@@ -161,6 +162,34 @@ public class FileManager {
         writer.name("id").value(professor.getId());
         writer.name("name").value(professor.getName());
         writer.name("course").value(professor.getCourse());
+        if (professor.getAttendanceSchedule().size() > 0) {
+            writer.name("attendance_schedule");
+            writer.beginArray();
+            professor.getAttendanceSchedule().forEach(schedule -> {
+                // start schedule object
+                try {
+                    writer.beginObject();
+                    writer.name("start");
+                    // start start object
+                    writer.beginObject();
+                    writer.name("dayOfWeek").value(schedule.getStart().getDayOfWeek().toString());
+                    writer.name("time").value(schedule.getStart().getTime().toString());
+                    // end start object
+                    writer.endObject();
+                    writer.name("end");
+                    // start end object
+                    writer.beginObject();
+                    writer.name("dayOfWeek").value(schedule.getEnd().getDayOfWeek().toString());
+                    writer.name("time").value(schedule.getEnd().getTime().toString());
+                    // end end object
+                    writer.endObject();
+                    writer.endObject();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+            writer.endArray();
+        }
         writer.endObject();
     }
 
@@ -186,11 +215,21 @@ public class FileManager {
 
         Professor professor = university.getProfessor(profId);
 
-        if (professor != null) {
-            return professor;
+        if (professor == null) {
+            professor = new Professor(profId, profName, profCourse);
         }
 
-        return new Professor(profId, profName, profCourse);
+        try {
+            for (JsonElement attendanceSchedule : professorJsonObject.getAsJsonArray("attendance_schedule")) {
+                // getting the start InstantTime
+                InstantTime start = getInstantTimeFromJson(attendanceSchedule.getAsJsonObject().getAsJsonObject().getAsJsonObject("start"));
+                // getting the end InstantTime
+                InstantTime end = getInstantTimeFromJson(attendanceSchedule.getAsJsonObject().getAsJsonObject().getAsJsonObject("end"));
+                professor.addAttendanceSchedule(new Schedule(start, end, null));
+            }
+        } catch (NullPointerException ignored) { /* No attendance schedule for professor */ }
+
+        return professor;
     }
 
     /**
@@ -216,14 +255,16 @@ public class FileManager {
      * @param studentsJsonObject JsonObject from the json file
      * @return ArrayList<Student> from the json
      */
-    private ArrayList<Student> getStudentsFromJson(JsonArray studentsJsonObject) {
+    private ArrayList<Student> getStudentsFromJson(University university, JsonArray studentsJsonObject) {
         ArrayList<Student> students = new ArrayList<>();
         for (JsonElement student : studentsJsonObject) {
             // iterate each student
             JsonObject studentObject = student.getAsJsonObject();
             String id = studentObject.get("id").getAsString();
             String name = studentObject.get("name").getAsString();
-            students.add(new Student(id, name));
+            Student studentAux = new Student(id, name);
+            students.add(studentAux);
+            university.addStudent(studentAux);
         }
         return students;
     }
@@ -271,7 +312,6 @@ public class FileManager {
         if (roomAux != null) {
             return roomAux;
         }
-
 
         return new Room(number, building, maxSize, floor, plugNumber);
     }

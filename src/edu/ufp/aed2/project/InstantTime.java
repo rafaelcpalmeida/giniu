@@ -44,7 +44,7 @@ public class InstantTime implements Comparable<InstantTime> {
 
     @Override
     public String toString() {
-        return "\n\t\tDay of the week: " + this.dayOfWeek +
-                "\n\t\tTime: " + this.time;
+        return "\n\t\t\tDay of the week: " + this.dayOfWeek +
+                "\n\t\t\tTime: " + this.time;
     }
 }

@@ -7,6 +7,7 @@ public class Professor extends Person {
     private static final Logger LOGGER = Logger.getLogger(Professor.class.getName());
 
     private String course;
+
     private final ArrayList<Schedule> attendanceSchedule;
 
     public Professor(String id, String name, String course) {
@@ -15,10 +16,25 @@ public class Professor extends Person {
         attendanceSchedule = new ArrayList<>();
     }
 
+    public ArrayList<Schedule> getAttendanceSchedule() {
+        return attendanceSchedule;
+    }
+
     /**
      * @param s schedule being added to attendanceSchedule.
      */
     public void addAttendanceSchedule(Schedule s) {
+        if (this.attendanceSchedule.size() == 0) {
+            this.attendanceSchedule.add(s);
+            return;
+        }
+
+        // Using for loop to avoid java.util.ConcurrentModificationException **facepalm**
+        for (Schedule schedule : this.attendanceSchedule) {
+            if (schedule.compareTo(s) == 0) {
+                return;
+            }
+        }
         this.attendanceSchedule.add(s);
     }
 

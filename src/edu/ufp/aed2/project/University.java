@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.SeparateChainingHashST;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +20,7 @@ public class University {
     private final HashMap<String, Professor> professors;
     private final HashMap<String, Subject> subjects;
     private final HashMap<String, Room> rooms;
+    private final HashMap<String, Student> students;
     private final SeparateChainingHashST<Subject, ArrayList<Professor>> subjProf;
     private final SeparateChainingHashST<Professor, ArrayList<Class>> profClass;
     private final SeparateChainingHashST<String, ArrayList<Class>> courseClass;
@@ -29,6 +31,7 @@ public class University {
         professors = new HashMap<>();
         subjects = new HashMap<>();
         rooms = new HashMap<>();
+        students = new HashMap<>();
         subjProf = new SeparateChainingHashST<>();
         profClass = new SeparateChainingHashST<>();
         courseClass = new SeparateChainingHashST<>();
@@ -282,12 +285,24 @@ public class University {
         return professors.get(username);
     }
 
+    public HashMap<String, Student> getStudents() {
+        return students;
+    }
+
+    public Student getStudent(String username) {
+        return students.get(username);
+    }
+
     public Subject getSubject(String name) {
         return subjects.get(name);
     }
 
     public Room getRoom(String id) {
         return rooms.get(id);
+    }
+
+    public void addStudent(Student student) {
+        students.putIfAbsent(student.getId(), student);
     }
 
     public void getProfessorClasses(Professor professor) {
@@ -357,6 +372,23 @@ public class University {
                     return;
                 }
                 LOGGER.info("0");
+            }
+        });
+    }
+
+    public void getAttendanceTimeAvailability(Professor professor, Student student) {
+        // TODO check student free schedule and check if it matches with professor free schedule
+        RedBlackBST<InstantTime, Class> studentClasses = student.getInstantTimeClass();
+        professor.getAttendanceSchedule().forEach(schedule -> {
+            AtomicBoolean available = new AtomicBoolean(true);
+            studentClasses.keys().forEach(instantTime -> {
+                if (studentClasses.get(instantTime).getSchedule().compareTo(schedule) == 0) {
+                    available.set(false);
+                }
+            });
+
+            if (available.get()) {
+                LOGGER.info(schedule.getStart().getDayOfWeek() + ": " + schedule.getStart().getTime() + " - " + schedule.getEnd().getTime());
             }
         });
     }

@@ -43,8 +43,12 @@ public abstract class Person {
             this.instanttimeClass.delete(instantTime);
             return;
         }
-        LOGGER.info("[WARNING] Person.java - removeClass():");
-        LOGGER.info("[WARNING] This person doesn't have this class in that InstantTime.");
+        LOGGER.warning("Person.java - removeClass():");
+        LOGGER.warning("This person doesn't have this class in that InstantTime.");
+    }
+
+    public RedBlackBST<InstantTime, Class> getInstantTimeClass() {
+        return instanttimeClass;
     }
 
     /**
