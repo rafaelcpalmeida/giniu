@@ -1,4 +1,4 @@
-package edu.ufp.aed2.project;
+package edu.ufp.aed2.project.exceptions;
 
 /**
  * Exception for ST's where the Person was not found.

@@ -2,7 +2,7 @@
   "classes": [
     {
       "course": "eng inf",
-      "type": "PL",
+      "type": "TP",
       "initials": "BGK",
       "university": "UFP",
       "subject": {
@@ -12,67 +12,25 @@
       },
       "schedule": {
         "start": {
-          "dayOfWeek": "MONDAY",
-          "time": "15:30"
+          "dayOfWeek": "WEDNESDAY",
+          "time": "10:00"
         },
         "end": {
-          "dayOfWeek": "MONDAY",
-          "time": "17:30"
+          "dayOfWeek": "WEDNESDAY",
+          "time": "12:30"
         },
         "room": {
           "building": "Sede",
-          "number": 101,
+          "number": 102,
           "maxSize": 30,
           "floor": 1,
           "plugNumber": 30
         }
       },
       "professor": {
-        "id": "jsobral",
-        "name": "Joao Santos Sobral",
-        "course": "eng inf",
-        "attendance_schedule": [
-          {
-            "start": {
-              "dayOfWeek": "MONDAY",
-              "time": "09:00"
-            },
-            "end": {
-              "dayOfWeek": "MONDAY",
-              "time": "10:00"
-            }
-          },
-          {
-            "start": {
-              "dayOfWeek": "MONDAY",
-              "time": "17:00"
-            },
-            "end": {
-              "dayOfWeek": "MONDAY",
-              "time": "19:00"
-            }
-          },
-          {
-            "start": {
-              "dayOfWeek": "WEDNESDAY",
-              "time": "10:00"
-            },
-            "end": {
-              "dayOfWeek": "WEDNESDAY",
-              "time": "12:30"
-            }
-          },
-          {
-            "start": {
-              "dayOfWeek": "TUESDAY",
-              "time": "09:00"
-            },
-            "end": {
-              "dayOfWeek": "TUESDAY",
-              "time": "10:00"
-            }
-          }
-        ]
+        "id": "ksilva",
+        "name": "Karen Silva",
+        "course": "eng inf"
       },
       "students": [
         {
@@ -80,12 +38,47 @@
           "name": "David Capela"
         },
         {
-          "id": "22341",
-          "name": "Joao Sousa"
-        },
-        {
           "id": "11111",
           "name": "Joana Monhe"
+        }
+      ]
+    },
+    {
+      "course": "Eng Inf",
+      "type": "PL",
+      "initials": "BGK",
+      "university": "UFP",
+      "subject": {
+        "name": "Hacking SI",
+        "ects": 6,
+        "initials": "PL"
+      },
+      "schedule": {
+        "start": {
+          "dayOfWeek": "MONDAY",
+          "time": "15:00"
+        },
+        "end": {
+          "dayOfWeek": "MONDAY",
+          "time": "17:00"
+        },
+        "room": {
+          "building": "Sede",
+          "number": 301,
+          "maxSize": 10,
+          "floor": 3,
+          "plugNumber": 2
+        }
+      },
+      "professor": {
+        "id": "sal",
+        "name": "Tio Sal",
+        "course": "InfoSec"
+      },
+      "students": [
+        {
+          "id": "21561",
+          "name": "Leandro Pires"
         }
       ]
     },
@@ -214,47 +207,8 @@
       ]
     },
     {
-      "course": "Eng Inf",
-      "type": "PL",
-      "initials": "BGK",
-      "university": "UFP",
-      "subject": {
-        "name": "Hacking SI",
-        "ects": 6,
-        "initials": "PL"
-      },
-      "schedule": {
-        "start": {
-          "dayOfWeek": "MONDAY",
-          "time": "15:00"
-        },
-        "end": {
-          "dayOfWeek": "MONDAY",
-          "time": "17:00"
-        },
-        "room": {
-          "building": "Sede",
-          "number": 301,
-          "maxSize": 10,
-          "floor": 3,
-          "plugNumber": 2
-        }
-      },
-      "professor": {
-        "id": "sal",
-        "name": "Tio Sal",
-        "course": "InfoSec"
-      },
-      "students": [
-        {
-          "id": "21561",
-          "name": "Leandro Pires"
-        }
-      ]
-    },
-    {
       "course": "eng inf",
-      "type": "TP",
+      "type": "PL",
       "initials": "BGK",
       "university": "UFP",
       "subject": {
@@ -264,30 +218,76 @@
       },
       "schedule": {
         "start": {
-          "dayOfWeek": "WEDNESDAY",
-          "time": "10:00"
+          "dayOfWeek": "MONDAY",
+          "time": "15:30"
         },
         "end": {
-          "dayOfWeek": "WEDNESDAY",
-          "time": "12:30"
+          "dayOfWeek": "MONDAY",
+          "time": "17:30"
         },
         "room": {
           "building": "Sede",
-          "number": 102,
+          "number": 101,
           "maxSize": 30,
           "floor": 1,
           "plugNumber": 30
         }
       },
       "professor": {
-        "id": "ksilva",
-        "name": "Karen Silva",
-        "course": "eng inf"
+        "id": "jsobral",
+        "name": "Joao Santos Sobral",
+        "course": "eng inf",
+        "attendance_schedule": [
+          {
+            "start": {
+              "dayOfWeek": "MONDAY",
+              "time": "09:00"
+            },
+            "end": {
+              "dayOfWeek": "MONDAY",
+              "time": "10:00"
+            }
+          },
+          {
+            "start": {
+              "dayOfWeek": "MONDAY",
+              "time": "17:00"
+            },
+            "end": {
+              "dayOfWeek": "MONDAY",
+              "time": "19:00"
+            }
+          },
+          {
+            "start": {
+              "dayOfWeek": "WEDNESDAY",
+              "time": "10:00"
+            },
+            "end": {
+              "dayOfWeek": "WEDNESDAY",
+              "time": "12:30"
+            }
+          },
+          {
+            "start": {
+              "dayOfWeek": "TUESDAY",
+              "time": "09:00"
+            },
+            "end": {
+              "dayOfWeek": "TUESDAY",
+              "time": "10:00"
+            }
+          }
+        ]
       },
       "students": [
         {
           "id": "37045",
           "name": "David Capela"
+        },
+        {
+          "id": "22341",
+          "name": "Joao Sousa"
         },
         {
           "id": "11111",

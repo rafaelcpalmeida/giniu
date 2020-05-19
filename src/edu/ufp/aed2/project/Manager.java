@@ -13,11 +13,13 @@ public class Manager {
     private static final Logger LOGGER = Logger.getLogger(Manager.class.getName());
 
     private static Manager manager;
-    private final SeparateChainingHashST<String, University> universities;
+    private SeparateChainingHashST<String, University> universities;
     private SeparateChainingHashST<Class, ArrayList<Student>> classes;
+    private SeparateChainingHashST<String,LocationManager> locations;
 
     private Manager() {
         this.universities = new SeparateChainingHashST<>();
+        this.locations = new SeparateChainingHashST<>();
     }
 
     public static Manager getInstance() {
@@ -55,5 +57,16 @@ public class Manager {
 
     public SeparateChainingHashST<Class, ArrayList<Student>> getClasses() {
         return classes;
+    }
+
+    /**
+     * Returns the LocationManager from given university
+     * @param university we want the LocationManager
+     * @return LocationManager from the university
+     */
+    public LocationManager getLocationManager(String university) {
+        if(this.locations.contains(university)) return this.locations.get(university);
+        this.locations.put(university,new LocationManager());
+        return this.locations.get(university);
     }
 }

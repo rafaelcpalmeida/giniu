@@ -6,13 +6,30 @@ import java.util.ArrayList;
 /**
  * Information about a room.
  */
-public class Room implements Comparable<Room> {
+public class Room extends Location implements Comparable<Room>{
     private final int number;         // room's number
     private final String building;    // room's building name ex: "Sede", "Fisio"
     private final int maxSize;        // room's maximum size
     private final int floor;          // room's floor number
     private final int plugNumber;     // room's number os electric plugs , if none than 0
+    private String universityName;    // room's university
 
+    /**
+     * Constructor to add this Room to graph
+     */
+    public Room(int number, String building, int maxSize, int floor, int plugNumber, String universityName, int x , int y) {
+        super(floor,x,y,universityName,TypeOfSpace.room);               // create the location
+        this.number = number;
+        this.building = building;
+        this.maxSize = maxSize;
+        this.floor = floor;
+        this.plugNumber = plugNumber;
+        this.universityName = universityName;
+    }
+
+    /**
+     * Constructor to not add this Room to graph
+     */
     public Room(int number, String building, int maxSize, int floor, int plugNumber) {
         this.number = number;
         this.building = building;

@@ -1,5 +1,9 @@
 package edu.ufp.aed2.project;
 
+import edu.princeton.cs.algs4.Edge;
+import edu.princeton.cs.algs4.EdgeWeightedGraph;
+import edu.ufp.aed2.project.exceptions.*;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,7 +23,23 @@ public class Main {
         //testPerson();
         //testUniversity();
         //testFileManager();
-        testManager();
+        //testManager();
+        testLocation();
+    }
+
+    private static void testLocation() {
+        Room room1 = new Room(101,"sede",12,1,123,"UFP",10,10);
+        Room room2 = new Room(102,"sede",12,1,123,"UFP",20,20);
+        LocationManager locationManager = Manager.getInstance().getLocationManager("UFP");
+
+        try {
+            locationManager.createNewSubGraph(1);
+            EdgeWeightedGraph graph = locationManager.getSubGraphFromFloor(room1.getFloor());
+            graph.addEdge(new Edge(room1.getVertexId(),room2.getVertexId(),room1.getDistanceFromOtherLocation(room2)));
+            LOGGER.info(graph.toString());
+        } catch (FloorNotFoundException | FloorAlreadyExistsException | LocationsNotInitException | VertexNotFoundException e) {
+            LOGGER.warning(e.getMessage());
+        }
     }
 
     private static void testManager() {
@@ -100,7 +120,6 @@ public class Main {
         FileManager fileManager = FileManager.getInstance();
     }
 
-
     private static void testInstantTime() {
         LOGGER.info("[TEST] InstantTime.java");
         LOGGER.info("==================================================");
@@ -130,7 +149,7 @@ public class Main {
         Student student = new Student("37045", "David Capela");
         Student student2 = new Student("37145", "Joao Silva");
         Student student3 = new Student("21561", "Tio Sal");
-        Room r1 = new Room(101, "Sede", 30, 1, 30);
+        Room r1 = new Room(101, "Sede", 30, 1, 30,"UFP",12,2);
         Subject s1 = new Subject("Base dados", 6, "PL");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
@@ -173,7 +192,7 @@ public class Main {
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
-                new Room(101, "Sede", 30, 1, 15)
+                new Room(101, "Sede", 30, 1, 15,"UFP",1,2)
         );
         Class class1 = new Class("inf", "PL", "diurno", schedule, university, subject, professor, new ArrayList<>());
         try {

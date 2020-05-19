@@ -1,5 +1,7 @@
 package edu.ufp.aed2.project;
 
+import edu.ufp.aed2.project.exceptions.PersonNotFoundException;
+
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
