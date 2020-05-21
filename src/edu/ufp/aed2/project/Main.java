@@ -1,5 +1,10 @@
 package edu.ufp.aed2.project;
 
+import edu.princeton.cs.algs4.Edge;
+import edu.princeton.cs.algs4.EdgeWeightedDigraph;
+import edu.princeton.cs.algs4.EdgeWeightedGraph;
+import edu.ufp.aed2.project.exceptions.*;
+
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -19,7 +24,38 @@ public class Main {
         //testPerson();
         //testUniversity();
         //testFileManager();
-        testManager();
+        //testManager();
+        testLocation();
+    }
+
+    private static void testLocation() {
+        Room room1 = new Room(101,"sede",12,1,123,"UFP",10,10);
+        Room room2 = new Room(102,"sede",12,1,123,"UFP",20,20);
+        Room room3 = new Room(201,"sede",12,2,123,"UFP",10,10);
+        Room room4 = new Room(202,"sede",12,2,123,"UFP",5,20);
+        Location location = new Location(2,35,5,"UFP",TypeOfSpace.pp);
+
+        LocationManager locationManager = Manager.getInstance().getLocationManager("UFP");
+
+        try {
+            locationManager.createGlobalGraph();
+            locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2));
+            locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1));
+            locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4));
+            locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3));
+            locationManager.createEdge(location.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(location,room3));
+
+            EdgeWeightedDigraph graph = locationManager.getGlobalGraph();
+            LOGGER.info(graph.toString());
+            LOGGER.info("Creating sub-graph from floor 1");
+            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(1));
+            LOGGER.info("Creating sub-graph from floor 2");
+            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(2));
+            LOGGER.info("Creating sub-graph from floor 3");
+            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(3));
+        } catch (LocationsNotInitException | VertexNotFoundException | GlobalGraphNotCreated | FloorNotFoundException e) {
+            LOGGER.warning(e.getMessage());
+        }
     }
 
     private static void testManager() {
@@ -100,7 +136,6 @@ public class Main {
         FileManager fileManager = FileManager.getInstance();
     }
 
-
     private static void testInstantTime() {
         LOGGER.info("[TEST] InstantTime.java");
         LOGGER.info("==================================================");
@@ -130,7 +165,7 @@ public class Main {
         Student student = new Student("37045", "David Capela");
         Student student2 = new Student("37145", "Joao Silva");
         Student student3 = new Student("21561", "Tio Sal");
-        Room r1 = new Room(101, "Sede", 30, 1, 30);
+        Room r1 = new Room(101, "Sede", 30, 1, 30,"UFP",12,2);
         Subject s1 = new Subject("Base dados", 6, "PL");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
@@ -173,7 +208,7 @@ public class Main {
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
-                new Room(101, "Sede", 30, 1, 15)
+                new Room(101, "Sede", 30, 1, 15,"UFP",1,2)
         );
         Class class1 = new Class("inf", "PL", "diurno", schedule, university, subject, professor, new ArrayList<>());
         try {
