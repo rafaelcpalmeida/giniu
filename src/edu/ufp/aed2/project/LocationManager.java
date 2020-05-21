@@ -1,11 +1,9 @@
 package edu.ufp.aed2.project;
 
-import edu.princeton.cs.algs4.EdgeWeightedGraph;
-import edu.princeton.cs.algs4.SeparateChainingHashST;
-import edu.ufp.aed2.project.exceptions.FloorAlreadyExistsException;
-import edu.ufp.aed2.project.exceptions.FloorNotFoundException;
-import edu.ufp.aed2.project.exceptions.LocationsNotInitException;
+import edu.princeton.cs.algs4.*;
+import edu.ufp.aed2.project.exceptions.*;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -14,29 +12,102 @@ import java.util.logging.Logger;
  */
 public class LocationManager {
     private static final Logger LOGGER = Logger.getLogger(LocationManager.class.getName());
-    private static EdgeWeightedGraph globalGraph;       // global graph with all the sub-graphs
-    private SeparateChainingHashST<Integer, EdgeWeightedGraph> subGraphs; // ST with all the sub-graphs indexed by floor number
+    private EdgeWeightedDigraph globalGraph;       // global graph with all the sub-graphs
     private ArrayList<Location> locations;
 
     public LocationManager() {
-        this.subGraphs = new SeparateChainingHashST<>();
         this.locations = new ArrayList<>();
     }
 
     /**
-     * Create a new sub-graph based on the amount of
-     * locations . Each Location is a vertex in the sub-graph
-     *
-     * @param floor number of the floor
-     * @throws FloorAlreadyExistsException throw if the floor being created already exists
+     * Creates the globalGraph for the university
+     * @throws LocationsNotInitException if the locations Array is empty ( no vertices )
      */
-    public void createNewSubGraph(int floor) throws FloorAlreadyExistsException, LocationsNotInitException {
-        if (this.subGraphs.contains(floor)) throw new FloorAlreadyExistsException(floor);
-        ArrayList<Location> locationsByFloor = this.getLocationsWhereFloorIs(floor);   // get all locations from given floor
-        this.subGraphs.put(floor, new EdgeWeightedGraph(locationsByFloor.size()));      // Create as many vertices as locations
-        LOGGER.info("The sub-graph for the floor " + floor + " was created!");
+    public void createGlobalGraph() throws LocationsNotInitException {
+        if(this.locations.isEmpty()) throw new LocationsNotInitException();
+        this.globalGraph = new EdgeWeightedDigraph(this.locations.size());
+        LOGGER.info("Global graph was created successfully with " + this.locations.size() + " vertices!");
     }
 
+    /**
+     * Returns all the edges from a given domain of vertices
+     * Used to calculate a sub-graph from @firstVertex to @lastVertex
+     * @param firstVertex first vertex of the sub graph - have the smallest index
+     * @param lastVertex last vertex of the sub graph - have the biggest index
+     * @return all the edges from the given domain (@firstVertex , @lastVertex).
+     * Returns null if there are no edges in the global graph.
+     */
+    private ArrayList<DirectedEdge> getEdgesFrom(int firstVertex , int lastVertex) throws GlobalGraphNotCreated {
+        if(this.globalGraph == null) throw new GlobalGraphNotCreated();
+        if(this.globalGraph.E() == 0) return null;
+        ArrayList<DirectedEdge> edges = new ArrayList<>();
+        for (DirectedEdge edge : this.globalGraph.edges()) {
+            if (edge.from() >= firstVertex && edge.from() <= lastVertex && edge.to() >= firstVertex && edge.to() <= lastVertex) {
+                // is between the given domain
+                edges.add(edge);
+            }
+        }
+        return edges;
+    }
+
+    /**
+     * @param floor we want the sub graph
+     * @return ArrayList<DirectedEdge> directEdges from the subgrapg
+     * @throws FloorNotFoundException if no floor flound
+     * @throws LocationsNotInitException if the locations array size is 0
+     * @throws VertexNotFoundException no vertices found
+     * @throws GlobalGraphNotCreated globalGraph not inited
+     */
+    public ArrayList<DirectedEdge> getSubGraphFromFloor(int floor) throws FloorNotFoundException, LocationsNotInitException, VertexNotFoundException, GlobalGraphNotCreated {
+        ArrayList<Location> floorLocations = this.getLocationsWhereFloorIs(floor);
+        if (floorLocations.isEmpty()) throw new FloorNotFoundException(floor);
+        int minIndex = floorLocations.get(0).getVertexId();;
+        int maxIndex = floorLocations.get(0).getVertexId();
+        for (Location location : floorLocations) {
+            if (location.getVertexId() > maxIndex) maxIndex = location.getVertexId();
+            if (location.getVertexId() < minIndex) minIndex = location.getVertexId();
+        }
+        return getEdgesFrom(minIndex,maxIndex);
+    }
+
+    /**
+     * Prints a set of DirectedEdges ( sub-graph )
+     * @param subGraph we want to print
+     */
+    public void printSubGraph(ArrayList<DirectedEdge> subGraph){
+        for (DirectedEdge directedEdge : subGraph){
+            LOGGER.info(directedEdge.toString());
+        }
+    }
+
+    /**
+     * @param source vertex tail
+     * @param dest vertex head
+     * @param weight from the connection
+     * @throws GlobalGraphNotCreated if the global graph was not created yet
+     */
+    public void createEdge(int source, int dest , double weight) throws GlobalGraphNotCreated {
+        DirectedEdge edge = new DirectedEdge(source,dest,weight);
+        if(this.globalGraph != null){
+            // If the global graph exists
+            this.globalGraph.addEdge(edge);
+            LOGGER.info("An edge from " + source + " to "+ dest + " w/ " + weight + " weight was added to graph");
+        } else throw new GlobalGraphNotCreated();
+    }
+
+    /**
+     * Calculate the connection weight between 2 vertices
+     * based on the Locations's coordinates.
+     * The further they are , the greater the weight is.
+     * They must be consequent vertices ( side by side )
+     * @param source head vertex
+     * @param dest tail vertex
+     * @return weight
+     */
+    public double calculateWeight(Location source, Location dest){
+        return source.getDistanceFromOtherLocation(dest);
+    }
+    
     /**
      * Returns all the locations from a certain floor
      *
@@ -67,15 +138,7 @@ public class LocationManager {
         LOGGER.info("Location successfully added to locations!");
     }
 
-    /**
-     * @param floor we want the respective sub-graph
-     * @return floor's sub-graph
-     * @throws FloorNotFoundException if the floor is not found in @subGraphs
-     */
-    public EdgeWeightedGraph getSubGraphFromFloor(int floor) throws FloorNotFoundException {
-        if (!this.subGraphs.contains(floor)) throw new FloorNotFoundException(floor);
-        return this.subGraphs.get(floor);
+    public EdgeWeightedDigraph getGlobalGraph() {
+        return globalGraph;
     }
-
-
 }

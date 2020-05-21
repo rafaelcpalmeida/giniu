@@ -1,6 +1,7 @@
 package edu.ufp.aed2.project;
 
 import edu.princeton.cs.algs4.Edge;
+import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.ufp.aed2.project.exceptions.*;
 
@@ -30,14 +31,29 @@ public class Main {
     private static void testLocation() {
         Room room1 = new Room(101,"sede",12,1,123,"UFP",10,10);
         Room room2 = new Room(102,"sede",12,1,123,"UFP",20,20);
+        Room room3 = new Room(201,"sede",12,2,123,"UFP",10,10);
+        Room room4 = new Room(202,"sede",12,2,123,"UFP",5,20);
+        Location location = new Location(2,35,5,"UFP",TypeOfSpace.pp);
+
         LocationManager locationManager = Manager.getInstance().getLocationManager("UFP");
 
         try {
-            locationManager.createNewSubGraph(1);
-            EdgeWeightedGraph graph = locationManager.getSubGraphFromFloor(room1.getFloor());
-            graph.addEdge(new Edge(room1.getVertexId(),room2.getVertexId(),room1.getDistanceFromOtherLocation(room2)));
+            locationManager.createGlobalGraph();
+            locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2));
+            locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1));
+            locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4));
+            locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3));
+            locationManager.createEdge(location.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(location,room3));
+
+            EdgeWeightedDigraph graph = locationManager.getGlobalGraph();
             LOGGER.info(graph.toString());
-        } catch (FloorNotFoundException | FloorAlreadyExistsException | LocationsNotInitException | VertexNotFoundException e) {
+            LOGGER.info("Creating sub-graph from floor 1");
+            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(1));
+            LOGGER.info("Creating sub-graph from floor 2");
+            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(2));
+            LOGGER.info("Creating sub-graph from floor 3");
+            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(3));
+        } catch (LocationsNotInitException | VertexNotFoundException | GlobalGraphNotCreated | FloorNotFoundException e) {
             LOGGER.warning(e.getMessage());
         }
     }
