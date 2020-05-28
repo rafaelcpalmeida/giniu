@@ -61,6 +61,7 @@ public class LocationManager {
 
     /**
      * @param floor we want the sub graph
+     * @return ArrayList<DirectedEdge> directEdges from the subgrapg
      * @throws FloorNotFoundException if no floor flound
      * @throws LocationsNotInitException if the locations array size is 0
      * @throws VertexNotFoundException no vertices found

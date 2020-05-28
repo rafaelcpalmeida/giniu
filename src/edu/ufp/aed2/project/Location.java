@@ -8,7 +8,9 @@ public class Location {
     private int x;                                  // x coordinate
     private int y;                                  // y coordinate
     private TypeOfSpace typeOfSpace;                // Type of the space
-    public Location(){}
+
+    public Location(){
+    }
 
     public Location(int floor, int x, int y, String university,TypeOfSpace typeOfSpace) {
         LocationManager locationManager = Manager.getInstance().getLocationManager(university);    // Manager for the given university
