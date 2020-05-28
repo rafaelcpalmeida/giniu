@@ -39,8 +39,10 @@ public class Main {
 
         try {
             locationManager.createGlobalGraph();
+            // floor 1
             locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2));
             locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1));
+            // floor 2
             locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4));
             locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3));
             locationManager.createEdge(location.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(location,room3));
@@ -48,11 +50,11 @@ public class Main {
             EdgeWeightedDigraph graph = locationManager.getGlobalGraph();
             LOGGER.info(graph.toString());
             LOGGER.info("Creating sub-graph from floor 1");
-            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(1));
+            LOGGER.info(locationManager.getSubGraphFromFloor(1).toString());
             LOGGER.info("Creating sub-graph from floor 2");
-            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(2));
+            LOGGER.info(locationManager.getSubGraphFromFloor(2).toString());
             LOGGER.info("Creating sub-graph from floor 3");
-            locationManager.printSubGraph(locationManager.getSubGraphFromFloor(3));
+            LOGGER.info(locationManager.getSubGraphFromFloor(3).toString());
         } catch (LocationsNotInitException | VertexNotFoundException | GlobalGraphNotCreated | FloorNotFoundException e) {
             LOGGER.warning(e.getMessage());
         }

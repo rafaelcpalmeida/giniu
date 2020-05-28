@@ -2,8 +2,6 @@ package edu.ufp.aed2.project;
 
 import edu.princeton.cs.algs4.*;
 import edu.ufp.aed2.project.exceptions.*;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -30,6 +28,17 @@ public class LocationManager {
     }
 
     /**
+     * Returns the Locations with a given vertexId
+     * @param vertexId from the Location we want
+     * @return Location
+     * @throws VertexNotFoundException exception
+     */
+    public Location getLocationWhereVertexIs(int vertexId) throws VertexNotFoundException {
+        for (Location location : this.locations) if(location.getVertexId() == vertexId) return location;
+        return null;
+    }
+
+    /**
      * Returns all the edges from a given domain of vertices
      * Used to calculate a sub-graph from @firstVertex to @lastVertex
      * @param firstVertex first vertex of the sub graph - have the smallest index
@@ -52,22 +61,23 @@ public class LocationManager {
 
     /**
      * @param floor we want the sub graph
-     * @return ArrayList<DirectedEdge> directEdges from the subgrapg
      * @throws FloorNotFoundException if no floor flound
      * @throws LocationsNotInitException if the locations array size is 0
      * @throws VertexNotFoundException no vertices found
      * @throws GlobalGraphNotCreated globalGraph not inited
      */
-    public ArrayList<DirectedEdge> getSubGraphFromFloor(int floor) throws FloorNotFoundException, LocationsNotInitException, VertexNotFoundException, GlobalGraphNotCreated {
+    public Subgraph getSubGraphFromFloor(int floor) throws FloorNotFoundException, LocationsNotInitException, VertexNotFoundException, GlobalGraphNotCreated {
         ArrayList<Location> floorLocations = this.getLocationsWhereFloorIs(floor);
         if (floorLocations.isEmpty()) throw new FloorNotFoundException(floor);
-        int minIndex = floorLocations.get(0).getVertexId();;
+        int minIndex = floorLocations.get(0).getVertexId();
         int maxIndex = floorLocations.get(0).getVertexId();
         for (Location location : floorLocations) {
             if (location.getVertexId() > maxIndex) maxIndex = location.getVertexId();
             if (location.getVertexId() < minIndex) minIndex = location.getVertexId();
         }
-        return getEdgesFrom(minIndex,maxIndex);
+        ArrayList<DirectedEdge> dEdges =  this.getEdgesFrom(minIndex,maxIndex);
+        LOGGER.info("a returnar subgraph");
+        return new Subgraph(dEdges, minIndex , maxIndex, this);
     }
 
     /**
