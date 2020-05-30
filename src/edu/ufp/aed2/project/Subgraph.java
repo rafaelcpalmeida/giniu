@@ -16,8 +16,8 @@ public class Subgraph {
 
     public Subgraph(ArrayList<DirectedEdge> directedEdges, int min, int max, LocationManager locationManager){
         this.graph = new EdgeWeightedDigraph((max - min) + 1);
-        LOGGER.info(" graph created!");
-        LOGGER.info(this.graph.toString());
+        LOGGER.info("graph created!");
+        //LOGGER.info(this.graph.toString());
         this.offset = min;
         LOGGER.info("offset -> " + this.offset);
         this.addEdges(directedEdges);
@@ -51,5 +51,9 @@ public class Subgraph {
     public Location getLocationFromVertexId(int vertexId) throws VertexNotFoundException {
         int globalVertexId = vertexId + this.offset;
         return this.locationManager.getLocationWhereVertexIs(globalVertexId);
+    }
+
+    public int getOffset() {
+        return offset;
     }
 }

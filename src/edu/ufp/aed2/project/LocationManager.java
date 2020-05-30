@@ -3,6 +3,7 @@ package edu.ufp.aed2.project;
 import edu.princeton.cs.algs4.*;
 import edu.ufp.aed2.project.exceptions.*;
 import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -12,6 +13,7 @@ public class LocationManager {
     private static final Logger LOGGER = Logger.getLogger(LocationManager.class.getName());
     private EdgeWeightedDigraph globalGraph;       // global graph with all the sub-graphs
     private ArrayList<Location> locations;
+    protected static CostEnum costEnum = CostEnum.DISTANCE;
 
     public LocationManager() {
         this.locations = new ArrayList<>();
@@ -46,7 +48,7 @@ public class LocationManager {
      * @return all the edges from the given domain (@firstVertex , @lastVertex).
      * Returns null if there are no edges in the global graph.
      */
-    private ArrayList<DirectedEdge> getEdgesFrom(int firstVertex , int lastVertex) throws GlobalGraphNotCreated {
+    private ArrayList<Connection> getEdgesFrom(int firstVertex , int lastVertex) throws GlobalGraphNotCreated {
         if(this.globalGraph == null) throw new GlobalGraphNotCreated();
         if(this.globalGraph.E() == 0) return null;
         ArrayList<DirectedEdge> edges = new ArrayList<>();
@@ -77,7 +79,26 @@ public class LocationManager {
             if (location.getVertexId() < minIndex) minIndex = location.getVertexId();
         }
         ArrayList<DirectedEdge> dEdges =  this.getEdgesFrom(minIndex,maxIndex);
-        LOGGER.info("a returnar subgraph");
+        LOGGER.info("returning subgraph");
+        return new Subgraph(dEdges, minIndex , maxIndex, this);
+    }
+
+
+    /**
+     * Generates a sub-graph with all the locations passed.
+     * @param locations we want the sub-graph
+     * @return Sub-graph with all the locations
+     */
+    public Subgraph getSubGraphFromVertices(ArrayList<Location> locations) throws LocationsNotInitException, VertexNotFoundException, GlobalGraphNotCreated {
+        if(locations.isEmpty()) throw new LocationsNotInitException();
+        int minIndex = locations.get(0).getVertexId();
+        int maxIndex = locations.get(0).getVertexId();
+        for (Location location : locations) {
+            if (location.getVertexId() > maxIndex) maxIndex = location.getVertexId();
+            if (location.getVertexId() < minIndex) minIndex = location.getVertexId();
+        }
+        ArrayList<Connection> dEdges =  this.getEdgesFrom(minIndex,maxIndex);
+        LOGGER.info("returning subgraph");
         return new Subgraph(dEdges, minIndex , maxIndex, this);
     }
 
@@ -94,15 +115,16 @@ public class LocationManager {
     /**
      * @param source vertex tail
      * @param dest vertex head
-     * @param weight from the connection
+     * @param distance distance weight from the connection
+     * @param timeCost time weight from the connection
      * @throws GlobalGraphNotCreated if the global graph was not created yet
      */
-    public void createEdge(int source, int dest , double weight) throws GlobalGraphNotCreated {
-        DirectedEdge edge = new DirectedEdge(source,dest,weight);
+    public void createEdge(int source, int dest , double distance, double timeCost) throws GlobalGraphNotCreated {
+        Connection edge = new Connection(source,dest,distance,timeCost);
         if(this.globalGraph != null){
             // If the global graph exists
             this.globalGraph.addEdge(edge);
-            LOGGER.info("An edge from " + source + " to "+ dest + " w/ " + weight + " weight was added to graph");
+            LOGGER.info("An edge from " + source + " to "+ dest + " w/ " + distance + " distance weight" + " and " + timeCost + " time cost was added to graph");
         } else throw new GlobalGraphNotCreated();
     }
 
@@ -152,4 +174,39 @@ public class LocationManager {
     public EdgeWeightedDigraph getGlobalGraph() {
         return globalGraph;
     }
+
+    /**
+     * Applies the shortest path algorithm to a given graph
+     * @param source where we start
+     * @param destination where we want to go
+     * @param graph the graph we want to use
+     */
+    public void shortestPathBetween(int source , int destination, EdgeWeightedDigraph graph, int offset, CostEnum type){
+        costEnum = type;
+        DijkstraSP dijkstraSP = new DijkstraSP(graph,source - offset);
+        LOGGER.info("printing dijkstra ...");
+            if (dijkstraSP.hasPathTo(destination - offset)) {
+                switch (type) {
+                    case DISTANCE:
+                        StdOut.printf("%d to %d (%.2f)  ", source , destination , dijkstraSP.distTo(destination - offset));
+                        for (DirectedEdge e : dijkstraSP.pathTo(destination - offset)) {
+                            StdOut.print((e.from() + offset) + "->" + (e.to() + offset)+ " " + String.format("%5.2f", e.weight()) + "   ");
+                        }
+                        StdOut.println();
+                        break;
+                    default:
+                        System.out.println(dijkstraSP.distTo(destination-offset));
+                }
+            }
+            else {
+                StdOut.printf("%d to %d         no path\n", source + offset, destination + offset);
+            }
+    }
+
+    private ArrayList<Location> subtractLocations(EdgeWeightedDigraph graph, ArrayList<Location> invalidLocations){
+
+        return null;
+    }
+
+
 }
