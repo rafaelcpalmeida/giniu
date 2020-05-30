@@ -3,8 +3,11 @@ package edu.ufp.aed2.project;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.temporal.TemporalAccessor;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
 
@@ -44,12 +47,25 @@ public class University {
     public String getName() {
         return name;
     }
-
     /**
      * @return rooms being used now.
      */
-    private ArrayList<Room> getRoomsUsedNow() {
-        return null;
+    public ArrayList<Room> getRoomsUsedNow() {
+        ArrayList<Room> roomsBeeingUsed = new ArrayList<>();
+        LocalTime localTime = LocalTime.now();              // not summer time
+        DayOfWeek dayOfWeek = this.getTodayDate().getDayOfWeek();
+        this.rooms.forEach(((key, room) -> {
+            if(room.isAvailable(new InstantTime(dayOfWeek,localTime))){
+                roomsBeeingUsed.add(room);
+            }
+        }));
+        return roomsBeeingUsed;
+    }
+
+
+
+    private LocalDate getTodayDate(){
+        return  LocalDate.now();
     }
 
     /**

@@ -6,6 +6,7 @@ import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.ufp.aed2.project.exceptions.*;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -22,10 +23,10 @@ public class Main {
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
-        //testUniversity();
+        testUniversity();
         //testFileManager();
         //testManager();
-        testLocation();
+        //testLocation();
     }
 
     private static void testLocation() {
@@ -218,6 +219,18 @@ public class Main {
             class1.addStudent(student2);
         } catch (PersonNotFoundException e) {
             LOGGER.info(e.getMessage());
+        }
+
+        Schedule scheduleNow = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(1)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().plusHours(3)),
+                new Room(102, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+        Class class2 = new Class("inf2", "PL", "diurno", scheduleNow, university, subject, professor, new ArrayList<>());
+
+        LOGGER.info("printing rooms being used now...");
+        for(Room room :university.getRoomsUsedNow()) {
+            System.out.println(room);
         }
 
         //university.printSubjProf();

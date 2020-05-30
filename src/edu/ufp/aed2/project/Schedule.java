@@ -3,12 +3,12 @@ package edu.ufp.aed2.project;
 public class Schedule implements Comparable<Schedule> {
     private InstantTime start;
     private InstantTime end;
-    private Room room;
+    private Room room = null;
 
     public Schedule(InstantTime start, InstantTime end, Room room) {
         this.start = start;
         this.end = end;
-        this.room = room;
+        this.setRoom(room);
     }
 
     public InstantTime getStart() {
@@ -33,6 +33,7 @@ public class Schedule implements Comparable<Schedule> {
 
     public void setRoom(Room room) {
         this.room = room;
+        room.addSchedule(this);
     }
 
     @Override
@@ -49,5 +50,21 @@ public class Schedule implements Comparable<Schedule> {
     @Override
     public int compareTo(Schedule schedule) {
         return this.start.compareTo(schedule.start);
+    }
+
+    /**
+     * Checks if this Schedule is between other Schedule,
+     * ex:
+     * schedule( Monday , 15h00 - 16h00).isBetween(Monday, 14h00 - 17h00 )
+     * true
+     * @param other schedule
+     * @return boolean
+     */
+    public boolean isBetween(Schedule other){
+        return this.compareTo(other) >= 0 && this.end.compareTo(other.end) <= 0;
+    }
+
+    public boolean interceptThisInstantTime(InstantTime instantTime){
+        return this.start.compareTo(instantTime)<=0 && this.end.compareTo(instantTime) >=0;
     }
 }
