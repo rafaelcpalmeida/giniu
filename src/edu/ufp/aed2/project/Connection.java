@@ -31,7 +31,7 @@ public class Connection extends DirectedEdge {
 
     @Override
     public double weight(){
-        System.out.println("entrei");
+        //System.out.println("entrei");
         if (LocationManager.costEnum == CostEnum.TIME) {
             return this.timeWeight;
         }
