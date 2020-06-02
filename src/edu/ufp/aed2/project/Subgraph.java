@@ -14,10 +14,10 @@ public class Subgraph {
     private EdgeWeightedDigraph graph;
     private int offset;                                      // offset between sub graph and global graph
 
-    public Subgraph(ArrayList<DirectedEdge> directedEdges, int min, int max, LocationManager locationManager){
+    public Subgraph(ArrayList<Connection> directedEdges, int min, int max, LocationManager locationManager){
         this.graph = new EdgeWeightedDigraph((max - min) + 1);
-        LOGGER.info(" graph created!");
-        LOGGER.info(this.graph.toString());
+        LOGGER.info("graph created!");
+        //LOGGER.info(this.graph.toString());
         this.offset = min;
         LOGGER.info("offset -> " + this.offset);
         this.addEdges(directedEdges);
@@ -29,11 +29,15 @@ public class Subgraph {
      * with the correspondent directedEdges
      * @param directedEdges from global graph
      */
-    private void addEdges(ArrayList<DirectedEdge> directedEdges){
+    private void addEdges(ArrayList<Connection> directedEdges){
         // Add direct edges
-        for(DirectedEdge directedEdge : directedEdges){
-            LOGGER.info(directedEdge.toString());
-            DirectedEdge offsetDirectedEdge = new DirectedEdge(directedEdge.from() - offset , directedEdge.to() - offset , directedEdge.weight());
+        for(Connection directedEdge : directedEdges){
+            System.out.println(directedEdge instanceof Connection);
+            LOGGER.info( directedEdge.toString());
+            Connection offsetDirectedEdge = new Connection(directedEdge.from() - offset , directedEdge.to() - offset , directedEdge.getDistance(),directedEdge.getTimeWeight());
+            //LocationManager.costEnum = CostEnum.TIME;
+            System.out.println(offsetDirectedEdge instanceof Connection);
+            System.out.println(directedEdge.weight());
             this.graph.addEdge(offsetDirectedEdge);
         }
     }
@@ -51,5 +55,9 @@ public class Subgraph {
     public Location getLocationFromVertexId(int vertexId) throws VertexNotFoundException {
         int globalVertexId = vertexId + this.offset;
         return this.locationManager.getLocationWhereVertexIs(globalVertexId);
+    }
+
+    public int getOffset() {
+        return offset;
     }
 }

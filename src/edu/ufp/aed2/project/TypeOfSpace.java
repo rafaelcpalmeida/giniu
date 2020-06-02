@@ -7,4 +7,5 @@ public enum TypeOfSpace {
     buildingEntry,      // Entry point for the building
     stairsTop,          // Stairs top
     stairsBot,          // Stairs bottom
+    exit,
 }
