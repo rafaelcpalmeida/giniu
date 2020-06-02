@@ -4,18 +4,24 @@ import edu.princeton.cs.algs4.RedBlackBST;
 
 import java.util.logging.Logger;
 
-public abstract class Person {
+public abstract class Person{
     private static final Logger LOGGER = Logger.getLogger(Person.class.getName());
 
     private String id;
     private String name;
     private final RedBlackBST<InstantTime, Class> instanttimeClass;
+    private int x;
+    private int y;
+    private int floor;
 
     public Person(String id, String name) {
         this.id = id;
         this.name = name;
-        instanttimeClass = new RedBlackBST<>();
+        this.instanttimeClass = new RedBlackBST<>();
     }
+
+
+
 
     /**
      * Add class to instanttimeClass redblack
@@ -87,5 +93,29 @@ public abstract class Person {
         return "Person:" +
                 "\n\tid: " + id +
                 "\n\tname: " + name;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 }
