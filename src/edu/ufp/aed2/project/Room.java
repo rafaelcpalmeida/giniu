@@ -13,6 +13,7 @@ public class Room extends Location implements Comparable<Room>{
     private final int floor;          // room's floor number
     private final int plugNumber;     // room's number os electric plugs , if none than 0
     private String universityName;    // room's university
+    private ArrayList<Schedule> schedules;
 
     /**
      * Constructor to add this Room to graph
@@ -25,6 +26,7 @@ public class Room extends Location implements Comparable<Room>{
         this.floor = floor;
         this.plugNumber = plugNumber;
         this.universityName = universityName;
+        this.schedules = new ArrayList<>();
     }
 
     /**
@@ -71,10 +73,13 @@ public class Room extends Location implements Comparable<Room>{
     }
 
     /**
-     * @param schedule passed to check availability.
+     * @param instantTime passed to check availability.
      * @return room's availability.
      */
-    public boolean isAvailable(Schedule schedule) {
+    public boolean isAvailable(InstantTime instantTime) {
+        for(Schedule schedule : this.schedules){
+            if(schedule.interceptThisInstantTime(instantTime)) return true;
+        }
         return false;
     }
 
@@ -92,5 +97,13 @@ public class Room extends Location implements Comparable<Room>{
     public String toString() {
         return "\n\tNumber: " + number +
                 "\n\tBuilding: " + building;
+    }
+
+    public void addSchedule(Schedule schedule){
+        if(this.schedules.contains(schedule)){
+            System.out.println("Schedule already exists !");
+            return;
+        }
+        this.schedules.add(schedule);
     }
 }
