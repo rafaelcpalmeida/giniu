@@ -207,7 +207,12 @@ public class Main {
         Student student = new Student("37045", "David Capela");
         Student student2 = new Student("36111", "Jose Carlos");
         Professor professor = new Professor("jsobral", "Joao Sobral", "inf");
-        Subject subject = new Subject("Base Dados", 6, "BD");
+        Professor professor2 = new Professor("prof2", "Prof 2", "inf");
+        Professor professor3 = new Professor("prof3", "Prof 3", "inf");
+        Professor professor4 = new Professor("prof4", "Prof 4", "inf");
+        Subject subject = new Subject("Base Dados TP", 6, "BD_TP");
+        Subject subject2 = new Subject("Base Dados PL", 4, "BD_PL");
+        Subject subject3 = new Subject("Base Dados Fake", 5, "BD_FAKE");
         Schedule schedule = new Schedule(
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(15, 0)),
                 new InstantTime(DayOfWeek.MONDAY, LocalTime.of(17, 0)),
@@ -226,12 +231,22 @@ public class Main {
                 new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().plusHours(3)),
                 new Room(102, "Sede", 30, 1, 15,"UFP",1,2)
         );
-        Class class2 = new Class("inf2", "PL", "diurno", scheduleNow, university, subject, professor, new ArrayList<>());
+        Schedule scheduleNow2 = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(2)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().plusHours(4)),
+                new Room(103, "Sede", 30, 1, 15,"UFP",1,2)
+        );
 
-        LOGGER.info("printing rooms being used now...");
-        for(Room room :university.getRoomsUsedNow()) {
-            System.out.println(room);
-        }
+        Schedule scheduleNotNow = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(10)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(9)),
+                new Room(104, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+        Class class2 = new Class("inf2", "PL", "diurno", scheduleNow, university, subject, professor2, new ArrayList<>());
+        Class class3 = new Class("inf2", "TP", "diurno", scheduleNow2, university, subject2, professor3, new ArrayList<>());
+        Class class4 = new Class("inf3", "TPPL", "diurno", scheduleNotNow, university, subject3, professor4, new ArrayList<>());
+
+        university.now();
 
         //university.printSubjProf();
         //university.printProfClass();

@@ -52,17 +52,19 @@ public class University {
      */
     public ArrayList<Room> getRoomsUsedNow() {
         ArrayList<Room> roomsBeeingUsed = new ArrayList<>();
-        LocalTime localTime = LocalTime.now();              // not summer time
-        DayOfWeek dayOfWeek = this.getTodayDate().getDayOfWeek();
         this.rooms.forEach(((key, room) -> {
-            if(room.isAvailable(new InstantTime(dayOfWeek,localTime))){
+            if(room.isAvailable(this.getInstantTimeNow())){
                 roomsBeeingUsed.add(room);
             }
         }));
         return roomsBeeingUsed;
     }
 
-
+    private InstantTime getInstantTimeNow(){
+        LocalTime localTime = LocalTime.now();              // not summer time
+        DayOfWeek dayOfWeek = this.getTodayDate().getDayOfWeek();
+        return new InstantTime(dayOfWeek,localTime);
+    }
 
     private LocalDate getTodayDate(){
         return  LocalDate.now();
@@ -72,21 +74,42 @@ public class University {
      * @return subjects taught now.
      */
     private ArrayList<Subject> getSubjectsTaughtNow() {
-        return null;
+        ArrayList<Subject> subjectsTaughtNow = new ArrayList<>();
+        for(String course : this.courseClass.keys()){
+            ArrayList<Class> courseClasses = this.courseClass.get(course);
+            courseClasses.forEach(class1 ->{
+                if(class1.isHavingClassesIn(this.getInstantTimeNow())) subjectsTaughtNow.add(class1.getSubject());
+            });
+        }
+        return subjectsTaughtNow;
     }
 
     /**
      * @return available profs now.
      */
     private ArrayList<Professor> getAvailableProfsNow() {
-        return null;
+        ArrayList<Professor> professors = new ArrayList<>();
+        for(Professor professor : this.profClass.keys()){
+            ArrayList<Class> profClasses = this.profClass.get(professor);
+            profClasses.forEach(class2 -> {
+                if(!class2.isHavingClassesIn(this.getInstantTimeNow())) professors.add(professor);
+            });
+        }
+        return professors;
     }
 
     /**
      * @return busy profs now.
      */
     private ArrayList<Professor> getBusyProfsNow() {
-        return null;
+        ArrayList<Professor> professors = new ArrayList<>();
+        for(Professor professor : this.profClass.keys()){
+            ArrayList<Class> profClasses = this.profClass.get(professor);
+            profClasses.forEach(class2 -> {
+                if(class2.isHavingClassesIn(this.getInstantTimeNow())) professors.add(professor);
+            });
+        }
+        return professors;
     }
 
 
@@ -98,7 +121,26 @@ public class University {
      * - Busy profs now.
      */
     public void now() {
+        LOGGER.info("Printing current university status ...");
+        LOGGER.info("printing rooms being used now...");
+        for(Room room :this.getRoomsUsedNow()) {
+            System.out.println(room);
+        }
 
+        LOGGER.info("printing subjects being taught now...");
+        for(Subject subject1 :this.getSubjectsTaughtNow()) {
+            System.out.println(subject1);
+        }
+
+        LOGGER.info("printing professor available now...");
+        for(Professor professor1 : this.getAvailableProfsNow()){
+            System.out.println(professor1);
+        }
+
+        LOGGER.info("printing professor busy now...");
+        for(Professor professor1 : this.getBusyProfsNow()){
+            System.out.println(professor1);
+        }
     }
 
     /**

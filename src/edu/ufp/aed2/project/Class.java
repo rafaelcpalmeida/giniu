@@ -2,6 +2,7 @@ package edu.ufp.aed2.project;
 
 import edu.ufp.aed2.project.exceptions.PersonNotFoundException;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
@@ -119,5 +120,9 @@ public class Class {
         for (Student student : students) {
             LOGGER.info(student.toString());
         }
+    }
+
+    public boolean isHavingClassesIn(InstantTime instantTime) {
+        return this.schedule.interceptThisInstantTime(instantTime);
     }
 }
