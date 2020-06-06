@@ -1,1 +1,148 @@
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Printing current university status ...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m printing rooms being used now...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m printing subjects being taught now...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m printing professor available now...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m printing professor busy now...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m David Capela's class schedule:
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m
+	Type: PL
+	Initials: diurno
+	Subject: Base Dados TP
+	Professor: Joao Sobral
+	Schedule:
+		Start:
+			Day of the week: MONDAY
+			Time: 15:00
+		End:
+			Day of the week: MONDAY
+			Time: 17:00
+		Room:
+	Number: 101
+	Building: Sede
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m =================================
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m removing class
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m No schedule yet for this person.
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Global graph was created successfully with 11 vertices!
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 4 to 5 w/ 14.142135623730951 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 5 to 4 w/ 14.142135623730951 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 5 to 6 w/ 14.142135623730951 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 6 to 5 w/ 14.142135623730951 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 6 to 7 w/ 7.0710678118654755 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 6 to 8 w/ 500.0 distance weight and 5.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 7 to 6 w/ 7.0710678118654755 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 7 to 8 w/ 11.180339887498949 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 8 to 7 w/ 11.180339887498949 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 8 to 9 w/ 32.01562118716424 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m An edge from 7 to 10 w/ 106.06601717798213 distance weight and 5.0 time cost was added to graph
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Printing global graph ...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m 11 11
+0:
+1:
+2:
+3:
+4: 4->5 - {Distance: 14.142135623730951 , Time: 10.0}
+5: 5->6 - {Distance: 14.142135623730951 , Time: 20.0}  5->4 - {Distance: 14.142135623730951 , Time: 10.0}
+6: 6->8 - {Distance: 500.0 , Time: 5.0}  6->7 - {Distance: 7.0710678118654755 , Time: 10.0}  6->5 - {Distance: 14.142135623730951 , Time: 20.0}
+7: 7->10 - {Distance: 106.06601717798213 , Time: 5.0}  7->8 - {Distance: 11.180339887498949 , Time: 20.0}  7->6 - {Distance: 7.0710678118654755 , Time: 20.0}
+8: 8->9 - {Distance: 32.01562118716424 , Time: 10.0}  8->7 - {Distance: 11.180339887498949 , Time: 20.0}
+9:
+10:
 
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m printing dijkstra ...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m printing dijkstra ...
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 1
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 2
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 3
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 4
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 5
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 6
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 7
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 8
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 9
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m Not connected in -> 10
+[32m2020-06-06 19:14:36[39m [33m[INFO   ][0m The graph is not connected!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Printing current university status ...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m printing rooms being used now...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m printing subjects being taught now...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m printing professor available now...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m printing professor busy now...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m David Capela's class schedule:
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m
+	Type: PL
+	Initials: diurno
+	Subject: Base Dados TP
+	Professor: Joao Sobral
+	Schedule:
+		Start:
+			Day of the week: MONDAY
+			Time: 15:00
+		End:
+			Day of the week: MONDAY
+			Time: 17:00
+		Room:
+	Number: 101
+	Building: Sede
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m =================================
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m removing class
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m No schedule yet for this person.
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Location successfully added to locations!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Global graph was created successfully with 11 vertices!
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 4 to 5 w/ 14.142135623730951 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 5 to 4 w/ 14.142135623730951 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 5 to 6 w/ 14.142135623730951 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 6 to 5 w/ 14.142135623730951 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 6 to 7 w/ 7.0710678118654755 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 6 to 8 w/ 500.0 distance weight and 5.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 7 to 6 w/ 7.0710678118654755 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 7 to 8 w/ 11.180339887498949 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 8 to 7 w/ 11.180339887498949 distance weight and 20.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 8 to 9 w/ 32.01562118716424 distance weight and 10.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m An edge from 7 to 10 w/ 106.06601717798213 distance weight and 5.0 time cost was added to graph
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Printing global graph ...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m 11 11
+0:
+1:
+2:
+3:
+4: 4->5 - {Distance: 14.142135623730951 , Time: 10.0}
+5: 5->6 - {Distance: 14.142135623730951 , Time: 20.0}  5->4 - {Distance: 14.142135623730951 , Time: 10.0}
+6: 6->8 - {Distance: 500.0 , Time: 5.0}  6->7 - {Distance: 7.0710678118654755 , Time: 10.0}  6->5 - {Distance: 14.142135623730951 , Time: 20.0}
+7: 7->10 - {Distance: 106.06601717798213 , Time: 5.0}  7->8 - {Distance: 11.180339887498949 , Time: 20.0}  7->6 - {Distance: 7.0710678118654755 , Time: 20.0}
+8: 8->9 - {Distance: 32.01562118716424 , Time: 10.0}  8->7 - {Distance: 11.180339887498949 , Time: 20.0}
+9:
+10:
+
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m printing dijkstra ...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m printing dijkstra ...
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 1
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 2
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 3
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 4
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 5
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 6
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 7
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 8
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 9
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m Not connected in -> 10
+[32m2020-06-06 19:15:14[39m [33m[INFO   ][0m The graph is not connected!
