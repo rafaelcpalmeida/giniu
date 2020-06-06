@@ -2,6 +2,7 @@ package edu.ufp.aed2.project;
 
 import edu.ufp.aed2.project.exceptions.PersonNotFoundException;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Logger;
@@ -12,7 +13,7 @@ import java.util.logging.Logger;
  * So when you remove the class in the University method removeClass() , your deleting the entire class such
  * as the students referred to it.
  */
-public class Class {
+public class Class implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
 
     private final String course;

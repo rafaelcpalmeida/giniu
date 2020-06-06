@@ -2,14 +2,14 @@ package edu.ufp.aed2.project;
 
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
  * Singleton that manages all the universities
  */
-public class Manager {
+public class Manager implements Serializable{
     private static final Logger LOGGER = Logger.getLogger(Manager.class.getName());
 
     private static Manager manager;
@@ -68,5 +68,26 @@ public class Manager {
         if(this.locations.contains(university)) return this.locations.get(university);
         this.locations.put(university,new LocationManager());
         return this.locations.get(university);
+    }
+
+    /**
+     * Write this object to binary and stores the file
+     */
+    public void writeToBinary() throws IOException {
+        FileOutputStream file = new FileOutputStream("/app/data/manager.giniu");
+        ObjectOutputStream oos = new ObjectOutputStream(file);
+        oos.writeObject(this);
+        oos.close();
+        LOGGER.info("Binary file successfully created!");
+    }
+
+    /**
+     * Read from file and changes this manager
+     */
+    public void readFromBinary() throws IOException, ClassNotFoundException {
+        FileInputStream file = new FileInputStream(new File("/app/data/manager.giniu"));
+        ObjectInputStream ois = new ObjectInputStream(file);
+        manager = (Manager) ois.readObject();
+        LOGGER.info("Binary file loaded!");
     }
 }

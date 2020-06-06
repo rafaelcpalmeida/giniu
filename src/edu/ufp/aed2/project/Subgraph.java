@@ -5,10 +5,11 @@ import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.ufp.aed2.project.exceptions.VertexNotFoundException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class Subgraph {
+public class Subgraph implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(LocationManager.class.getName());
     private LocationManager locationManager;
     private EdgeWeightedDigraph graph;

@@ -1,9 +1,10 @@
 package edu.ufp.aed2.project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
-public class Professor extends Person {
+public class Professor extends Person implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(Professor.class.getName());
 
     private String course;

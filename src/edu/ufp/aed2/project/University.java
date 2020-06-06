@@ -3,6 +3,7 @@ package edu.ufp.aed2.project;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,7 +17,7 @@ import java.util.logging.Logger;
  * Has all information about the university.
  * All the information is held here.
  */
-public class University {
+public class University implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(University.class.getName());
 
     private final String name;
@@ -90,6 +91,7 @@ public class University {
     private ArrayList<Professor> getAvailableProfsNow() {
         ArrayList<Professor> professors = new ArrayList<>();
         for(Professor professor : this.profClass.keys()){
+            LOGGER.info(professor.getName());
             ArrayList<Class> profClasses = this.profClass.get(professor);
             profClasses.forEach(class2 -> {
                 if(!class2.isHavingClassesIn(this.getInstantTimeNow())) professors.add(professor);

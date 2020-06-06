@@ -1,8 +1,9 @@
 package edu.ufp.aed2.project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Student extends Person {
+public class Student extends Person implements Serializable {
     public Student(String id, String name) {
         super(id, name);
     }

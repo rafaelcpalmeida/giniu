@@ -2,7 +2,9 @@ package edu.ufp.aed2.project;
 
 import edu.ufp.aed2.project.exceptions.VertexNotFoundException;
 
-public class Location {
+import java.io.Serializable;
+
+public class Location implements Serializable {
     private int floor;                              // Floor that is locations is in
     private int vertexId = -1;                      // The id of vertex in the sub-graph , if -1 , than it has no graph
     private int x;                                  // x coordinate

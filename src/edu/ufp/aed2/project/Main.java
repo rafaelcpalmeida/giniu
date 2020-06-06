@@ -5,6 +5,7 @@ import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.ufp.aed2.project.exceptions.*;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -23,10 +24,84 @@ public class Main {
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
-        testUniversity();
+        //testUniversity();
         //testFileManager();
         //testManager();
         //testLocation();
+        //testSaveToBinary();
+        testReadFromBinary();
+    }
+
+    private static void testReadFromBinary() {
+        try {
+            Manager.getInstance().readFromBinary();
+            LOGGER.info("printing graph loaded from binary file");
+            LOGGER.info(Manager.getInstance().getLocationManager("UFP").getGlobalGraph().toString());
+            Manager.getInstance().getUniversity("UFP").now();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void testSaveToBinary() {
+        Room room1 = new Room(101,"sede",12,1,123,"UFP",10,10);
+        Room room2 = new Room(102,"sede",12,1,123,"UFP",20,20);
+        Room room3 = new Room(201,"sede",12,2,123,"UFP",10,10);
+        Room room4 = new Room(202,"sede",12,2,123,"UFP",5,20);
+        Location location = new Location(2,35,5,"UFP",TypeOfSpace.pp);
+        LocationManager locationManager = Manager.getInstance().getLocationManager("UFP");
+        University university = Manager.getInstance().getUniversity("UFP");
+        Schedule scheduleNow = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(1)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().plusHours(3)),
+                new Room(105, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+        Schedule scheduleNow2 = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(2)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().plusHours(4)),
+                new Room(103, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+
+        Schedule scheduleNotNow = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(10)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(9)),
+                new Room(104, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+        Professor professor2 = new Professor("prof2", "Prof 2", "inf");
+        Professor professor3 = new Professor("prof3", "Prof 3", "inf");
+        //Professor professor4 = new Professor("prof4", "Prof 4", "inf");
+        Subject subject = new Subject("Base Dados TP", 6, "BD_TP");
+        Subject subject2 = new Subject("Base Dados PL", 4, "BD_PL");
+        Subject subject3 = new Subject("Base Dados Fake", 5, "BD_FAKE");
+        Class class2 = new Class("inf2", "PL", "diurno", scheduleNow, university, subject, professor2, new ArrayList<>());
+        Class class3 = new Class("inf2", "TP", "diurno", scheduleNow2, university, subject2, professor3, new ArrayList<>());
+        //Class class4 = new Class("inf3", "TPPL", "diurno", scheduleNotNow, university, subject3, professor4, new ArrayList<>());
+        university.now();
+
+        try {
+            locationManager.createGlobalGraph();
+            // floor 1
+            locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2));
+            locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1));
+            // floor 2
+            locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4));
+            locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3));
+            locationManager.createEdge(location.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(location,room3));
+            LOGGER.info("Writing to binary ...");
+            Manager.getInstance().writeToBinary();
+        } catch (GlobalGraphNotCreated globalGraphNotCreated) {
+            globalGraphNotCreated.printStackTrace();
+        } catch (VertexNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LocationsNotInitException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     private static void testLocation() {

@@ -2,13 +2,15 @@ package edu.ufp.aed2.project;
 
 import edu.princeton.cs.algs4.*;
 import edu.ufp.aed2.project.exceptions.*;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
  * Class that manages all the graphs from a university
  */
-public class LocationManager {
+public class LocationManager implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(LocationManager.class.getName());
     private EdgeWeightedDigraph globalGraph;       // global graph with all the sub-graphs
     private ArrayList<Location> locations;

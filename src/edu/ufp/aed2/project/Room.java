@@ -1,12 +1,13 @@
 package edu.ufp.aed2.project;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 
 /**
  * Information about a room.
  */
-public class Room extends Location implements Comparable<Room>{
+public class Room extends Location implements Comparable<Room>, Serializable {
     private final int number;         // room's number
     private final String building;    // room's building name ex: "Sede", "Fisio"
     private final int maxSize;        // room's maximum size

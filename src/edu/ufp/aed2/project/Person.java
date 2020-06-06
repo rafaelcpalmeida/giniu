@@ -2,9 +2,10 @@ package edu.ufp.aed2.project;
 
 import edu.princeton.cs.algs4.RedBlackBST;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 
-public abstract class Person {
+public abstract class Person implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(Person.class.getName());
 
     private String id;

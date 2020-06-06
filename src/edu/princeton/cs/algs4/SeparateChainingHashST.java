@@ -10,6 +10,8 @@
 
 package edu.princeton.cs.algs4;
 
+import java.io.Serializable;
+
 /**
  *  The {@code SeparateChainingHashST} class represents a symbol table of generic
  *  key-value pairs.
@@ -40,7 +42,7 @@ package edu.princeton.cs.algs4;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  */
-public class SeparateChainingHashST<Key, Value> {
+public class SeparateChainingHashST<Key, Value> implements Serializable {
     private static final int INIT_CAPACITY = 4;
 
     private int n;                                // number of key-value pairs
