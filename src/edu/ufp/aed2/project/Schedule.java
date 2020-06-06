@@ -1,6 +1,8 @@
 package edu.ufp.aed2.project;
 
-public class Schedule implements Comparable<Schedule> {
+import java.io.Serializable;
+
+public class Schedule implements Comparable<Schedule>, Serializable {
     private InstantTime start;
     private InstantTime end;
     private Room room = null;

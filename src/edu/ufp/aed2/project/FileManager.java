@@ -17,8 +17,10 @@ import java.util.logging.Logger;
  * Singleton for a File Manager Class
  * All the operation for the file related stuff are done here
  */
-public class FileManager {
-    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+
+public class FileManager implements Serializable{
+    private static final Logger LOGGER = Logger.getLogger(FileManager.class.getName());
+
 
     private static FileManager obj;
 

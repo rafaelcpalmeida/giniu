@@ -40,77 +40,82 @@ public class Main {
         //testFileManager();
         //testManager();
         //testLocation();
-        testShortestPath();
+        //testSaveToBinary();
+        testReadFromBinary();
     }
 
-    private static void testShortestPath() {
-        Room room0 = new Room(101,"sede",12,1,123,"UFP",10,10);
-        Room room1 = new Room(102,"sede",12,1,123,"UFP",20,20);
-        Room room2 = new Room(103,"sede",12,1,123,"UFP",30,30);
-        Room room3 = new Room(104,"sede",12,1,123,"UFP",25,25);
-        Room room4 = new Room(105,"sede",12,1,123,"UFP",20,15);
-        //Room roomExcluded = new Room(106,"sede",12,1,123,"UFP",23,15);
-        //Room roomExcluded2 = new Room(107,"sede",12,1,123,"UFP",28,15);
-        //Room room3 = new Room(201,"sede",12,2,123,"UFP",10,10);
-        //Room room4 = new Room(202,"sede",12,2,123,"UFP",5,20);
-        //Location location = new Location(1,35,5,"UFP",TypeOfSpace.pp);
-        Location exitNear = new Location(1,40,40,"UFP",TypeOfSpace.exit);
-        Location exitFar = new Location(1,100,100,"UFP",TypeOfSpace.exit);
-        Student student = new Student("37045","David Capela");
-        student.setFloor(1);
-        student.setX(29);
-        student.setY(29);
+    private static void testReadFromBinary() {
+        try {
+            Manager.getInstance().readFromBinary();
+            LOGGER.info("printing graph loaded from binary file");
+            LOGGER.info(Manager.getInstance().getLocationManager("UFP").getGlobalGraph().toString());
+            Manager.getInstance().getUniversity("UFP").now();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private static void testSaveToBinary() {
+        Room room1 = new Room(101,"sede",12,1,123,"UFP",10,10);
+        Room room2 = new Room(102,"sede",12,1,123,"UFP",20,20);
+        Room room3 = new Room(201,"sede",12,2,123,"UFP",10,10);
+        Room room4 = new Room(202,"sede",12,2,123,"UFP",5,20);
+        Location location = new Location(2,35,5,"UFP",TypeOfSpace.pp);
         LocationManager locationManager = Manager.getInstance().getLocationManager("UFP");
+        University university = Manager.getInstance().getUniversity("UFP");
+        Schedule scheduleNow = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(1)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().plusHours(3)),
+                new Room(105, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+        Schedule scheduleNow2 = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(2)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().plusHours(4)),
+                new Room(103, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+
+        Schedule scheduleNotNow = new Schedule(
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(10)),
+                new InstantTime(LocalDate.now().getDayOfWeek(), LocalTime.now().minusHours(9)),
+                new Room(104, "Sede", 30, 1, 15,"UFP",1,2)
+        );
+        Professor professor2 = new Professor("prof2", "Prof 2", "inf");
+        Professor professor3 = new Professor("prof3", "Prof 3", "inf");
+        //Professor professor4 = new Professor("prof4", "Prof 4", "inf");
+        Subject subject = new Subject("Base Dados TP", 6, "BD_TP");
+        Subject subject2 = new Subject("Base Dados PL", 4, "BD_PL");
+        Subject subject3 = new Subject("Base Dados Fake", 5, "BD_FAKE");
+        Class class2 = new Class("inf2", "PL", "diurno", scheduleNow, university, subject, professor2, new ArrayList<>());
+        Class class3 = new Class("inf2", "TP", "diurno", scheduleNow2, university, subject2, professor3, new ArrayList<>());
+        //Class class4 = new Class("inf3", "TPPL", "diurno", scheduleNotNow, university, subject3, professor4, new ArrayList<>());
+        university.now();
+
 
         try {
             locationManager.createGlobalGraph();
             // floor 1
-            locationManager.createEdge(room0.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room0,room1),10);
-            locationManager.createEdge(room1.getVertexId(),room0.getVertexId(),locationManager.calculateWeight(room1,room0),10);
-            locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2),20);
-            locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1),20);
-            locationManager.createEdge(room2.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room2,room3),10);
-            locationManager.createEdge(room2.getVertexId(),room4.getVertexId(),500,5);
-            locationManager.createEdge(room3.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room3,room2),20);
-            locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4),20);
-            locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3),20);
-            locationManager.createEdge(room4.getVertexId(),exitNear.getVertexId(),locationManager.calculateWeight(room4,exitNear),10);
-            locationManager.createEdge(room3.getVertexId(),exitFar.getVertexId(),locationManager.calculateWeight(room3,exitFar),5);
-
-            LOGGER.info("Printing global graph ...");
-            LOGGER.info(locationManager.getGlobalGraph().toString());
-            locationManager.shortestPathToExit(student,CostEnum.DISTANCE);
-            locationManager.shortestPathToExit(student,CostEnum.TIME);
-            locationManager.isConnected(locationManager.getGlobalGraph());
-            /*
-            LOGGER.info("Creating the sub-graph locations ...");
-            ArrayList<Location> subGraphLocations = new ArrayList<>();
-            subGraphLocations.add(room2);
-            subGraphLocations.add(room3);
-            subGraphLocations.add(room4);
-            subGraphLocations.add(roomExcluded);
-            subGraphLocations.add(roomExcluded);
-            ArrayList<Location> roomsExcluded = new ArrayList<>();
-            roomsExcluded.add(roomExcluded);
-            roomsExcluded.add(roomExcluded2);
-
-            LOGGER.info("Subtracting the unwanted locations");
-            locationManager.subtractLocations(subGraphLocations,roomsExcluded);
-
-            LOGGER.info("Creating sub graph ...");
-            Subgraph subgraph1 = locationManager.getSubGraphFromVertices(subGraphLocations);
-
-            LOGGER.info("printing shortest path now ...");
-            locationManager.shortestPathBetween(room2.getVertexId(),room4.getVertexId(),subgraph1.getGraph(),subgraph1.getOffset(),CostEnum.DISTANCE);
-
-            LOGGER.info("printing shortest time path now ...");
-            locationManager.shortestPathBetween(room2.getVertexId(),room4.getVertexId(),subgraph1.getGraph(),subgraph1.getOffset(),CostEnum.TIME);
-        */
-        } catch (LocationsNotInitException | VertexNotFoundException | GlobalGraphNotCreated | FloorNotFoundException e) {
-
-            LOGGER.warning(e.getMessage());
+            locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2));
+            locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1));
+            // floor 2
+            locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4));
+            locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3));
+            locationManager.createEdge(location.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(location,room3));
+            LOGGER.info("Writing to binary ...");
+            Manager.getInstance().writeToBinary();
+        } catch (GlobalGraphNotCreated globalGraphNotCreated) {
+            globalGraphNotCreated.printStackTrace();
+        } catch (VertexNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (LocationsNotInitException e) {
+            e.printStackTrace();
         }
+
+
+
     }
 
     private static void testLocation() {

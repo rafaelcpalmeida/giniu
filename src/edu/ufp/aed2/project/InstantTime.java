@@ -1,9 +1,10 @@
 package edu.ufp.aed2.project;
 
+import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
-public class InstantTime implements Comparable<InstantTime> {
+public class InstantTime implements Comparable<InstantTime> , Serializable {
     private final DayOfWeek dayOfWeek;
     private LocalTime time;
 

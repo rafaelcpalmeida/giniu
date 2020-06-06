@@ -1,8 +1,9 @@
 package edu.ufp.aed2.project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Subject {
+public class Subject implements Serializable {
     private String name;
     private final int ects;
     private final String initials;
