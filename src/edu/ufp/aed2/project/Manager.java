@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 /**
  * Singleton that manages all the universities
  */
+
 public class Manager implements Serializable{
     private static final Logger LOGGER = Logger.getLogger(Manager.class.getName());
 

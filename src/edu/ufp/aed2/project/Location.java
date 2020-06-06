@@ -61,4 +61,8 @@ public class Location implements Serializable {
     public double getDistanceFromOtherLocation(Location other){
         return Math.sqrt((other.getY() - this.y) * (other.getY() - this.y) + (other.getX() - this.x) * (other.getX() - this.x));
     }
+
+    public double getDistanceFromCoordinate(int x , int y){
+        return Math.sqrt((y - this.y) * (y - this.y) + (x - this.x) * (x - this.x));
+    }
 }

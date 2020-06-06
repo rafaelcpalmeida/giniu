@@ -10,7 +10,9 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Main {
     private static final Logger LOGGER;
@@ -19,12 +21,22 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "\033[32m%1$tF %1$tT\033[39m \u001b[33m[%4$-7s]\u001b[0m %5$s %n");
         LOGGER = Logger.getLogger(Main.class.getName());
+        try {
+            FileHandler fh;
+            // This block configure the logger with handler and formatter
+            fh = new FileHandler("/app/data/logs/giniu.log", true);
+            LOGGER.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (SecurityException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
         //testInstantTime();
         //testPerson();
-        //testUniversity();
+        testUniversity();
         //testFileManager();
         //testManager();
         //testLocation();
@@ -80,6 +92,7 @@ public class Main {
         //Class class4 = new Class("inf3", "TPPL", "diurno", scheduleNotNow, university, subject3, professor4, new ArrayList<>());
         university.now();
 
+
         try {
             locationManager.createGlobalGraph();
             // floor 1
@@ -102,6 +115,7 @@ public class Main {
         }
 
 
+
     }
 
     private static void testLocation() {
@@ -110,18 +124,17 @@ public class Main {
         Room room3 = new Room(201,"sede",12,2,123,"UFP",10,10);
         Room room4 = new Room(202,"sede",12,2,123,"UFP",5,20);
         Location location = new Location(2,35,5,"UFP",TypeOfSpace.pp);
-
         LocationManager locationManager = Manager.getInstance().getLocationManager("UFP");
 
         try {
             locationManager.createGlobalGraph();
             // floor 1
-            locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2));
-            locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1));
+            locationManager.createEdge(room1.getVertexId(),room2.getVertexId(),locationManager.calculateWeight(room1,room2),30);
+            locationManager.createEdge(room2.getVertexId(),room1.getVertexId(),locationManager.calculateWeight(room2,room1),20);
             // floor 2
-            locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4));
-            locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3));
-            locationManager.createEdge(location.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(location,room3));
+            locationManager.createEdge(room3.getVertexId(),room4.getVertexId(),locationManager.calculateWeight(room3,room4),20);
+            locationManager.createEdge(room4.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(room4,room3),20);
+            locationManager.createEdge(location.getVertexId(),room3.getVertexId(),locationManager.calculateWeight(location,room3),20);
 
             EdgeWeightedDigraph graph = locationManager.getGlobalGraph();
             LOGGER.info(graph.toString());

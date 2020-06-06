@@ -3,6 +3,7 @@ package edu.ufp.aed2.project;
 import edu.princeton.cs.algs4.RedBlackBST;
 import edu.princeton.cs.algs4.SeparateChainingHashST;
 
+
 import java.io.Serializable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -17,6 +18,7 @@ import java.util.logging.Logger;
  * Has all information about the university.
  * All the information is held here.
  */
+
 public class University implements Serializable {
     private static final Logger LOGGER = Logger.getLogger(University.class.getName());
 

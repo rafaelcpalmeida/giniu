@@ -8,6 +8,7 @@ public class Student extends Person implements Serializable {
         super(id, name);
     }
 
+
     /**
      * Intersects this student schedule with the attendanceSchedule from the
      * professor and returns a valid schedule that can be valid for both.
