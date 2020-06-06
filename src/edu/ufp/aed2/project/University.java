@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  * All the information is held here.
  */
 public class University {
-    private static final Logger LOGGER = Logger.getLogger(University.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     private final String name;
     private final HashMap<String, Professor> professors;
