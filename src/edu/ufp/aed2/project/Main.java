@@ -5,11 +5,14 @@ import edu.princeton.cs.algs4.EdgeWeightedDigraph;
 import edu.princeton.cs.algs4.EdgeWeightedGraph;
 import edu.ufp.aed2.project.exceptions.*;
 
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 public class Main {
     private static final Logger LOGGER;
@@ -18,6 +21,16 @@ public class Main {
         System.setProperty("java.util.logging.SimpleFormatter.format",
                 "\033[32m%1$tF %1$tT\033[39m \u001b[33m[%4$-7s]\u001b[0m %5$s %n");
         LOGGER = Logger.getLogger(Main.class.getName());
+        try {
+            FileHandler fh;
+            // This block configure the logger with handler and formatter
+            fh = new FileHandler("/app/data/logs/giniu.log", true);
+            LOGGER.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (SecurityException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {

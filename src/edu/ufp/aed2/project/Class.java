@@ -13,7 +13,7 @@ import java.util.logging.Logger;
  * as the students referred to it.
  */
 public class Class {
-    private static final Logger LOGGER = Logger.getLogger(Class.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     private final String course;
     private final String type;

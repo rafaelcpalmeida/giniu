@@ -11,7 +11,7 @@ import java.util.logging.Logger;
  * Class that manages all the graphs from a university
  */
 public class LocationManager {
-    private static final Logger LOGGER = Logger.getLogger(LocationManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private EdgeWeightedDigraph globalGraph;       // global graph with all the sub-graphs
     private ArrayList<Location> locations;
     protected static CostEnum costEnum = CostEnum.DISTANCE;

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 
 public class Subgraph {
-    private static final Logger LOGGER = Logger.getLogger(LocationManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
     private LocationManager locationManager;
     private EdgeWeightedDigraph graph;
     private int offset;                                      // offset between sub graph and global graph

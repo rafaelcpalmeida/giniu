@@ -5,7 +5,7 @@ import edu.princeton.cs.algs4.RedBlackBST;
 import java.util.logging.Logger;
 
 public abstract class Person{
-    private static final Logger LOGGER = Logger.getLogger(Person.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     private String id;
     private String name;

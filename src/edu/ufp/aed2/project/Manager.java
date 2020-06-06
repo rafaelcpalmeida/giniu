@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * Singleton that manages all the universities
  */
 public class Manager {
-    private static final Logger LOGGER = Logger.getLogger(Manager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     private static Manager manager;
     private SeparateChainingHashST<String, University> universities;
